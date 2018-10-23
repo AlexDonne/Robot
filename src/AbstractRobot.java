@@ -1,3 +1,6 @@
+import Map.Case;
+import Utils.NatureTerrain;
+
 public class AbstractRobot {
 
     private Case position;

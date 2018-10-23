@@ -1,3 +1,7 @@
+package Map;
+
+import Utils.Direction;
+
 public class Carte {
     private int tailleCases;
 
@@ -10,6 +14,10 @@ public class Carte {
     public Carte(int nbLignes, int nbColonnes) {
         this.nbColonnes = nbColonnes;
         this.nbLignes = nbLignes;
+    }
+
+    public void ajouterCase(int ligne, int colonne, Case position){
+        cases[ligne][colonne] = position;
     }
 
     public int getTailleCases() {
