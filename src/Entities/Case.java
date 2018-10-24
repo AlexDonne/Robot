@@ -1,4 +1,4 @@
-package Map;
+package Entities;
 
 import Utils.NatureTerrain;
 
