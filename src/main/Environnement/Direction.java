@@ -1,9 +1,9 @@
-package Utils;
+package Environnement;
 
 public enum Direction {
     NORD,
     SUD,
     EST,
-    OUEST
+    OUEST;
 }
 

@@ -1,13 +1,14 @@
 package io;
 
 
-import Entities.*;
-import Utils.NatureTerrain;
+import Environnement.*;
+import Robots.*;
+import Environnement.NatureTerrain;
 
 import java.io.*;
 import java.util.*;
 import java.util.zip.DataFormatException;
-import Utils.TypesRobot;
+import Robots.TypesRobot;
 
 
 /**
@@ -79,7 +80,7 @@ public class LecteurDonnees {
             int nbColonnes = scanner.nextInt();
             int tailleCases = scanner.nextInt();    // en m
 
-            Carte carte = new Carte(nbLignes, nbColonnes);
+            Carte carte = new Carte(nbLignes, nbColonnes, 50);
             System.out.println("Carte " + nbLignes + "x" + nbColonnes
                     + "; taille des cases = " + tailleCases);
 
@@ -156,7 +157,7 @@ public class LecteurDonnees {
      */
     private Incendie lireIncendie(int i) throws DataFormatException {
         ignorerCommentaires();
-        System.out.print("Entities.Incendie " + i + ": ");
+        System.out.print("Environnement.Incendie " + i + ": ");
 
         try {
             int lig = scanner.nextInt();

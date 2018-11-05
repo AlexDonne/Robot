@@ -1,10 +1,10 @@
 # Compiled class file
 *.class
 
-.idea/*
-
+robots2018.pdf
 out/*
-
+doc/*
+.idea/*
 cartes/*
 # Log file
 *.log

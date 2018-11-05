@@ -1,9 +1,9 @@
-package Utils;
+package Environnement;
 
 public enum NatureTerrain {
     EAU,
     FORET,
     ROCHE,
     TERRAIN_LIBRE,
-    HABITAT
+    HABITAT;
 }

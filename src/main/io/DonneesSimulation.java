@@ -1,8 +1,8 @@
 package io;
 
-import Entities.AbstractRobot;
-import Entities.Carte;
-import Entities.Incendie;
+import Robots.AbstractRobot;
+import Environnement.Carte;
+import Environnement.Incendie;
 
 import java.util.List;
 import java.util.Set;

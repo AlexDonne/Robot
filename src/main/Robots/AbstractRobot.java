@@ -1,10 +1,11 @@
-package Entities;
+package Robots;
 
-import Utils.NatureTerrain;
-
-import java.util.List;
+import Environnement.Case;
+import Environnement.NatureTerrain;
 
 public abstract class AbstractRobot {
+
+    private long dateFinOccupation = 0;
 
     protected Case position;
 
@@ -37,4 +38,15 @@ public abstract class AbstractRobot {
     public void setVitesse(int vitesse) {
         this.vitesse = vitesse;
     }
+
+    public void setDateFinOccupation(long t) {
+        this.dateFinOccupation = t;
+    }
+
+    public long getDateFinOccupation() {
+        return this.dateFinOccupation;
+    }
+
+    public abstract TypesRobot getType();
+
 }

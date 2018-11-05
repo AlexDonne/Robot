@@ -1,6 +1,4 @@
-package Entities;
-
-import Utils.NatureTerrain;
+package Environnement;
 
 public class Case {
     private int ligne;
