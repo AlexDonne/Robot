@@ -19,4 +19,16 @@ public class DonneesSimulation {
         this.incendies = incendies;
         this.robots = robots;
     }
+
+    public Carte getCarte() {
+        return carte;
+    }
+
+    public Set<Incendie> getIncendies() {
+        return incendies;
+    }
+
+    public List<AbstractRobot> getRobots() {
+        return robots;
+    }
 }

@@ -8,25 +8,57 @@ import Evenements.EvenementDepartIncendie;
 import Evenements.EvenementDeplacer;
 import Evenements.EvenementFinIncendie;
 import Robots.AbstractRobot;
-import gui.GUISimulator;
-import gui.Simulable;
+import gui.*;
+import gui.Rectangle;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.zip.DataFormatException;
+
 
 public class Simulateur implements Simulable {
 
-    List<Evenement> listeEvenements;
+    private List<Evenement> listeEvenements;
 
-    GUISimulator guiSimulator;
-    long dateSimulation;
+    private GUISimulator guiSimulator;
+    private long dateSimulation;
 
-    public Simulateur(long dateSimulation, GUISimulator gui) {
-        this.guiSimulator = gui;
-        gui.setSimulable(this);
+    private DonneesSimulation donneesSimulation;
+
+    public Simulateur(long dateSimulation, String fichier) {
         this.dateSimulation = dateSimulation;
         this.listeEvenements = new LinkedList<>();
+        try {
+            this.donneesSimulation = LecteurDonnees.lire(fichier);
+        } catch (FileNotFoundException e) {
+            System.out.println("File " + fichier + " not found");
+        } catch (DataFormatException e) {
+            System.out.println("Data not in good format");
+        }
+        this.guiSimulator = new GUISimulator(this.donneesSimulation.getCarte().getNbLignes() * 100, this.donneesSimulation.getCarte().getNbColonnes() * 100, Color.BLACK);
+        guiSimulator.setSimulable(this);
+        draw();
+    }
+
+
+    private void draw() {
+        guiSimulator.reset();
+        for (int i = 0; i < this.donneesSimulation.getCarte().getNbLignes(); i++) {
+            for (int j = 0; j < this.donneesSimulation.getCarte().getNbColonnes(); j++) {
+                Color color = this.donneesSimulation.getCarte().getCase(i, j).getNatureTerrain().getColor();
+                guiSimulator.addGraphicalElement(new Rectangle(j * 100 + 50, i * 100 + 50, Color.white, color, 100));
+            }
+        }
+        for(Incendie incendie : this.donneesSimulation.getIncendies()){
+            guiSimulator.addGraphicalElement(new ImageElement(incendie.getPosition().getLigne() * 100 + 15, incendie.getPosition().getColonne() *100 + 15, "images/flammes.png", 80, 80, null));
+        }
+
+        for (AbstractRobot robot : this.donneesSimulation.getRobots()) {
+            guiSimulator.addGraphicalElement(new Oval(robot.getPosition().getLigne() * 100 + 50, robot.getPosition().getColonne() * 100 + 50, robot.getType().getColor(), robot.getType().getColor() , 50));
+        }
+
     }
 
     @Override

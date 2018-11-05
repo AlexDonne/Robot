@@ -15,10 +15,11 @@ public class Carte {
         this.nbColonnes = nbColonnes;
         this.nbLignes = nbLignes;
         this.tailleCases = tailleCases;
+        this.cases = new Case[nbLignes][nbColonnes];
     }
 
-    public void ajouterCase(int ligne, int colonne, Case position) {
-        cases[ligne][colonne] = position;
+    public void ajouterCase(int ligne, int colonne, NatureTerrain nature) {
+        cases[ligne][colonne] = new Case(nature, ligne, colonne);
     }
 
     public double getTailleCases() {

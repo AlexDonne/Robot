@@ -7,8 +7,11 @@ public class Case {
 
     private NatureTerrain natureTerrain;
 
-    public Case(NatureTerrain natureTerrain){
+    public Case(NatureTerrain natureTerrain, int ligne, int colonne)
+    {
         this.natureTerrain = natureTerrain;
+        this.ligne = ligne;
+        this.colonne = colonne;
     }
 
     public int getLigne() {

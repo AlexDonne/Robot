@@ -42,7 +42,7 @@ public class LecteurDonnees {
      *
      * @param fichierDonnees nom du fichier à lire
      */
-    public static void lire(String fichierDonnees)
+    public static DonneesSimulation lire(String fichierDonnees)
             throws FileNotFoundException, DataFormatException {
         System.out.println("\n == Lecture du fichier" + fichierDonnees);
         LecteurDonnees lecteur = new LecteurDonnees(fichierDonnees);
@@ -50,6 +50,8 @@ public class LecteurDonnees {
         DonneesSimulation donneesSimulation = new DonneesSimulation(lecteur.lireCarte(), lecteur.lireIncendies(), lecteur.lireRobots());
         scanner.close();
         System.out.println("\n == Lecture terminee");
+
+        return donneesSimulation;
     }
 
 
@@ -87,7 +89,7 @@ public class LecteurDonnees {
             for (int lig = 0; lig < nbLignes; lig++) {
                 for (int col = 0; col < nbColonnes; col++) {
                     NatureTerrain nature = lireCase(lig, col);
-                    carte.ajouterCase(lig, col, new Case(nature));
+                    carte.ajouterCase(lig, col, nature);
                 }
             }
             this.carte = carte;
@@ -108,7 +110,6 @@ public class LecteurDonnees {
         ignorerCommentaires();
         System.out.print("Case (" + lig + "," + col + "): ");
         String chaineNature = new String();
-        //		NatureTerrain nature;
 
         try {
             chaineNature = scanner.next();

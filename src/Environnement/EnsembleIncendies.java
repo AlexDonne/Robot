@@ -33,7 +33,7 @@ public class EnsembleIncendies {
         return i;
       }
     }
-    return new Incendie(new Case(NatureTerrain.TERRAIN_LIBRE), 100);
+    return null;
   }
 
 }

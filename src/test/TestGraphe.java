@@ -1,3 +1,8 @@
+package test;
+
+import Environnement.Graphe;
+import Environnement.Itineraire;
+
 public class TestGraphe {
   public static void main(String[] args) {
 
