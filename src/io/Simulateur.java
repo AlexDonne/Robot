@@ -56,7 +56,7 @@ public class Simulateur implements Simulable {
         }
 
         for (AbstractRobot robot : this.donneesSimulation.getRobots()) {
-            guiSimulator.addGraphicalElement(new Oval(robot.getPosition().getLigne() * 100 + 50, robot.getPosition().getColonne() * 100 + 50, robot.getType().getColor(), robot.getType().getColor() , 50));
+            guiSimulator.addGraphicalElement(new ImageElement(robot.getPosition().getLigne() * 100 + 20, robot.getPosition().getColonne() *100 + 20, "images/drone.png", 60, 60, null));
         }
 
     }

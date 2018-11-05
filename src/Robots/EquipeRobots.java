@@ -25,6 +25,6 @@ public class EquipeRobots {
                 return r;
             }
         }
-        throw new Exception("Cas pas censé arrivé");
+        throw new Exception("Cas pas censé arriver");
     }
 }
