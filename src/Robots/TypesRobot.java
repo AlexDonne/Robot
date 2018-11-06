@@ -4,6 +4,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.MalformedURLException;
 
 public enum TypesRobot {
     DRONE(new ArrayList<Environnement.NatureTerrain>(
@@ -15,7 +18,7 @@ public enum TypesRobot {
                     Environnement.NatureTerrain.TERRAIN_LIBRE
             )
     ),
-            Color.decode("#cc33ff")
+            new String("images/drone.png")
     ),
     PATTES(new ArrayList<Environnement.NatureTerrain>(
             Arrays.asList(
@@ -25,14 +28,14 @@ public enum TypesRobot {
                     Environnement.NatureTerrain.TERRAIN_LIBRE
             )
     ),
-            Color.decode("#cc33ff")
+            new String("images/pattes.png")
     ),
     ROUES(new ArrayList<Environnement.NatureTerrain>(
             Arrays.asList(Environnement.NatureTerrain.HABITAT,
                     Environnement.NatureTerrain.TERRAIN_LIBRE
             )
     ),
-            Color.decode("#cc33ff")
+            new String("images/roues.png")
     ),
     CHENILLE(new ArrayList<Environnement.NatureTerrain>(
             Arrays.asList(
@@ -41,21 +44,21 @@ public enum TypesRobot {
                     Environnement.NatureTerrain.TERRAIN_LIBRE
             )
     ),
-            Color.decode("#cc33ff")
+            new String("images/chenilles.png")
     );
 
     private List<Environnement.NatureTerrain> deplacements;
-    private Color color;
-    TypesRobot(List<Environnement.NatureTerrain> deplacements, Color color) {
+    private String url;
+    TypesRobot(List<Environnement.NatureTerrain> deplacements, String url) {
         this.deplacements = deplacements;
-        this.color = color;
+        this.url = url;
     }
 
     public List<Environnement.NatureTerrain> getDeplacements() {
         return deplacements;
     }
 
-    public Color getColor() {
-        return color;
+    public String getUrl() {
+        return url;
     }
 }
