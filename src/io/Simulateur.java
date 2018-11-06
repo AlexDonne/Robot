@@ -91,7 +91,7 @@ public class Simulateur implements Simulable {
 
         for (AbstractRobot robot : this.donneesSimulation.getRobots()) {
             guiSimulator.addGraphicalElement(
-                    new Oval(robot.getPosition().getColonne() * 100 + 50, robot.getPosition().getLigne() * 100 + 50, robot.getType().getColor(), robot.getType().getColor(), 60)
+                    new ImageElement(robot.getPosition().getColonne() * 100 + 20, robot.getPosition().getLigne() *100 + 20, robot.getType().getUrl(), 60, 60, null)
             );
             guiSimulator.addGraphicalElement(
                     new Text(robot.getPosition().getColonne() * 100 + 50, robot.getPosition().getLigne() * 100 + 50, Color.BLACK, Integer.toString(robot.getReservoir()))

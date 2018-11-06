@@ -15,7 +15,7 @@ public enum TypesRobot {
                     Environnement.NatureTerrain.TERRAIN_LIBRE
             )
     ),
-            Color.decode("#BE33FF")
+            new String("images/drone.png")
     ),
     PATTES(new ArrayList<Environnement.NatureTerrain>(
             Arrays.asList(
@@ -25,37 +25,37 @@ public enum TypesRobot {
                     Environnement.NatureTerrain.TERRAIN_LIBRE
             )
     ),
-            Color.decode("#FFFFFF")
+            new String("images/pattes.png")
     ),
     ROUES(new ArrayList<Environnement.NatureTerrain>(
             Arrays.asList(Environnement.NatureTerrain.HABITAT,
                     Environnement.NatureTerrain.TERRAIN_LIBRE
             )
     ),
-            Color.decode("#F333FF")
+            new String("images/roues.png")
     ),
-    CHENILLE(new ArrayList<Environnement.NatureTerrain>(
+    CHENILLES(new ArrayList<Environnement.NatureTerrain>(
             Arrays.asList(
                     Environnement.NatureTerrain.HABITAT,
                     Environnement.NatureTerrain.FORET,
                     Environnement.NatureTerrain.TERRAIN_LIBRE
             )
     ),
-            Color.decode("#FF33AC")
+            new String("images/chenilles.png")
     );
 
     private List<Environnement.NatureTerrain> deplacements;
-    private Color color;
-    TypesRobot(List<Environnement.NatureTerrain> deplacements, Color color) {
+    private String url;
+    TypesRobot(List<Environnement.NatureTerrain> deplacements, String url) {
         this.deplacements = deplacements;
-        this.color = color;
+        this.url = url;
     }
 
     public List<Environnement.NatureTerrain> getDeplacements() {
         return deplacements;
     }
 
-    public Color getColor() {
-        return color;
+    public String getUrl() {
+        return url;
     }
 }
