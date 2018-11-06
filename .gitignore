@@ -6,7 +6,6 @@ out/*
 doc/*
 bin/*
 .idea/*
-cartes/*
 # Log file
 *.log
 
