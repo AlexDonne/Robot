@@ -37,7 +37,7 @@ public enum TypesRobot {
     ),
             new String("images/roues.png")
     ),
-    CHENILLE(new ArrayList<Environnement.NatureTerrain>(
+    CHENILLES(new ArrayList<Environnement.NatureTerrain>(
             Arrays.asList(
                     Environnement.NatureTerrain.HABITAT,
                     Environnement.NatureTerrain.FORET,

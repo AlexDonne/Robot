@@ -3,8 +3,8 @@ package Robots;
 import Environnement.Case;
 import Environnement.NatureTerrain;
 
-public class RobotChenille extends RobotTerrestre {
-    public RobotChenille(Case position) {
+public class RobotChenilles extends RobotTerrestre {
+    public RobotChenilles(Case position) {
         super(position);
         this.reservoir = 2000;
         this.vitesse = 60;
@@ -26,7 +26,7 @@ public class RobotChenille extends RobotTerrestre {
 
     @Override
     public TypesRobot getType() {
-        return TypesRobot.CHENILLE;
+        return TypesRobot.CHENILLES;
     }
 
     @Override

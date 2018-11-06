@@ -245,8 +245,8 @@ public class LecteurDonnees {
                 case DRONE:
                     return new RobotAerien(this.carte.getCase(lig, col));
 
-                case CHENILLE:
-                    return new RobotChenille(this.carte.getCase(lig, col));
+                case CHENILLES:
+                    return new RobotChenilles(this.carte.getCase(lig, col));
 
                 case PATTES:
                     return new RobotPattes(this.carte.getCase(lig, col));

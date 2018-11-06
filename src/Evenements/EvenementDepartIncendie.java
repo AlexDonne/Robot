@@ -2,7 +2,7 @@ package Evenements;
 
 import Environnement.Incendie;
 import Robots.AbstractRobot;
-import Robots.RobotChenille;
+import Robots.RobotChenilles;
 
 public class EvenementDepartIncendie extends Evenement {
     Incendie incendie;
