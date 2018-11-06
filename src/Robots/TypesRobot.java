@@ -4,9 +4,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.MalformedURLException;
 
 public enum TypesRobot {
     DRONE(new ArrayList<Environnement.NatureTerrain>(
@@ -18,7 +15,7 @@ public enum TypesRobot {
                     Environnement.NatureTerrain.TERRAIN_LIBRE
             )
     ),
-            new String("images/drone.png")
+            Color.decode("#BE33FF")
     ),
     PATTES(new ArrayList<Environnement.NatureTerrain>(
             Arrays.asList(
@@ -28,37 +25,37 @@ public enum TypesRobot {
                     Environnement.NatureTerrain.TERRAIN_LIBRE
             )
     ),
-            new String("images/pattes.png")
+            Color.decode("#FFFFFF")
     ),
     ROUES(new ArrayList<Environnement.NatureTerrain>(
             Arrays.asList(Environnement.NatureTerrain.HABITAT,
                     Environnement.NatureTerrain.TERRAIN_LIBRE
             )
     ),
-            new String("images/roues.png")
+            Color.decode("#F333FF")
     ),
-    CHENILLES(new ArrayList<Environnement.NatureTerrain>(
+    CHENILLE(new ArrayList<Environnement.NatureTerrain>(
             Arrays.asList(
                     Environnement.NatureTerrain.HABITAT,
                     Environnement.NatureTerrain.FORET,
                     Environnement.NatureTerrain.TERRAIN_LIBRE
             )
     ),
-            new String("images/chenilles.png")
+            Color.decode("#FF33AC")
     );
 
     private List<Environnement.NatureTerrain> deplacements;
-    private String url;
-    TypesRobot(List<Environnement.NatureTerrain> deplacements, String url) {
+    private Color color;
+    TypesRobot(List<Environnement.NatureTerrain> deplacements, Color color) {
         this.deplacements = deplacements;
-        this.url = url;
+        this.color = color;
     }
 
     public List<Environnement.NatureTerrain> getDeplacements() {
         return deplacements;
     }
 
-    public String getUrl() {
-        return url;
+    public Color getColor() {
+        return color;
     }
 }

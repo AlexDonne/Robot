@@ -1,26 +1,16 @@
 package Environnement;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 public class Itineraire {
-  private ArrayList<Integer> listeSommets;
-  private ArrayList<Double> listeDurees;
+  private Map<Case, Double> mapItineraire;
 
-  public Itineraire(ArrayList<Integer> listeSommets, ArrayList<Double> listeDurees) {
-    this.listeSommets = listeSommets;
-    this.listeDurees = listeDurees;
+  public Itineraire(Map<Case, Double> mapItineraire) {
+    this.mapItineraire = mapItineraire;
   }
 
-  public ArrayList<Integer> getListeSommets() {
-    return this.listeSommets;
+  public Map<Case, Double> getMapItineraire() {
+    return this.mapItineraire;
   }
 
-  public ArrayList<Double> getListeDurees() {
-    return this.listeDurees;
-  }
-
-  public void afficher() {
-    System.out.println("Liste des sommets : " + this.listeSommets);
-    System.out.println("Temps pour chacun des sommets : " + this.listeDurees);
-  }
 }

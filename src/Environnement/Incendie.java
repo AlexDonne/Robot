@@ -5,23 +5,11 @@ public class Incendie {
     private Case position;
     private long dateFin = -1; //pas encore eteint, on ne connait pas la date;
     private boolean prisEnCharge = false;
-    private int quantEau;
+    private int eauNecessaire;
 
-    public void decrementQuantEau() {
-        quantEau--;
-    }
-
-    public Incendie(Case position, int quantEau) {
+    public Incendie(Case position, int eauNecessaire) {
         this.position = position;
-        this.quantEau = quantEau;
-    }
-
-    public boolean estEteint(long t) {
-        return this.dateFin >= 0 && this.dateFin <= t;
-    }
-
-    public void setDateFin(long t) {
-        this.dateFin = t;
+        this.eauNecessaire = eauNecessaire;
     }
 
     public boolean estPrisEnCharge() {
@@ -32,7 +20,19 @@ public class Incendie {
         this.prisEnCharge = true;
     }
 
+    public void plusPrisEnCharge(){
+        this.prisEnCharge = false;
+    }
+
     public Case getPosition() {
         return position;
+    }
+
+    public int getEauNecessaire() {
+        return this.eauNecessaire;
+    }
+
+    public void setEauNecessaire(int eauNecessaire) {
+        this.eauNecessaire = eauNecessaire;
     }
 }

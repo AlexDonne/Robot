@@ -57,16 +57,6 @@ public class Carte {
         }
     }
 
-    public void afficher() {
-        System.out.println("Voci la carte:");
-        for (int i = 0; i < this.nbLignes; i++) {
-            for (int j = 0; j < this.nbColonnes; j++) {
-                System.out.print(this.cases[i][j].getNatureTerrain().toString());
-                System.out.print(" ; ");
-            }
-            System.out.println();
-        }
-    }
 
     public Graphe toGraphe(AbstractRobot robot) {
         Graphe graphe = new Graphe(this.nbLignes * this.nbColonnes);
@@ -91,5 +81,59 @@ public class Carte {
             }
         }
         return graphe;
+    }
+
+    public boolean eauAdjacente(Case position){
+        int i = position.getLigne();
+        int j = position.getColonne();
+        if (0 < i && i < this.nbLignes - 1) {
+            if (0 < j && j < this.nbColonnes - 1) {
+                return this.cases[i-1][j].getNatureTerrain().equals(NatureTerrain.EAU)
+                        || this.cases[i+1][j].getNatureTerrain().equals(NatureTerrain.EAU)
+                        || this.cases[i][j+1].getNatureTerrain().equals(NatureTerrain.EAU)
+                        || this.cases[i][j-1].getNatureTerrain().equals(NatureTerrain.EAU);
+            }
+            if (j == 0) {
+                return this.cases[i-1][j].getNatureTerrain().equals(NatureTerrain.EAU)
+                        || this.cases[i+1][j].getNatureTerrain().equals(NatureTerrain.EAU)
+                        || this.cases[i][j+1].getNatureTerrain().equals(NatureTerrain.EAU);
+            }
+            if (j == this.nbColonnes - 1) {
+                return this.cases[i-1][j].getNatureTerrain().equals(NatureTerrain.EAU)
+                        || this.cases[i+1][j].getNatureTerrain().equals(NatureTerrain.EAU)
+                        || this.cases[i][j-1].getNatureTerrain().equals(NatureTerrain.EAU);
+            }
+        }
+        if (i == 0) {
+            if (0 < j && j < this.nbColonnes - 1) {
+                return this.cases[i+1][j].getNatureTerrain().equals(NatureTerrain.EAU)
+                        || this.cases[i][j+1].getNatureTerrain().equals(NatureTerrain.EAU)
+                        || this.cases[i][j-1].getNatureTerrain().equals(NatureTerrain.EAU);
+            }
+            if (j == 0) {
+                return this.cases[i+1][j].getNatureTerrain().equals(NatureTerrain.EAU)
+                        || this.cases[i][j+1].getNatureTerrain().equals(NatureTerrain.EAU);
+            }
+            if (j == this.nbColonnes - 1) {
+                return this.cases[i+1][j].getNatureTerrain().equals(NatureTerrain.EAU)
+                        || this.cases[i][j-1].getNatureTerrain().equals(NatureTerrain.EAU);
+            }
+        }
+        if (i == this.nbLignes - 1) {
+            if (0 < j && j < this.nbColonnes - 1) {
+                return this.cases[i-1][j].getNatureTerrain().equals(NatureTerrain.EAU)
+                        || this.cases[i][j+1].getNatureTerrain().equals(NatureTerrain.EAU)
+                        || this.cases[i][j-1].getNatureTerrain().equals(NatureTerrain.EAU);
+            }
+            if (j == 0) {
+                return this.cases[i-1][j].getNatureTerrain().equals(NatureTerrain.EAU)
+                        || this.cases[i][j+1].getNatureTerrain().equals(NatureTerrain.EAU) ;
+            }
+            if (j == this.nbColonnes - 1) {
+                return this.cases[i-1][j].getNatureTerrain().equals(NatureTerrain.EAU)
+                        || this.cases[i][j-1].getNatureTerrain().equals(NatureTerrain.EAU);
+            }
+        }
+        throw new IllegalArgumentException("Case hors carte");
     }
 }

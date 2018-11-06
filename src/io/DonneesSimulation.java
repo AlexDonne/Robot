@@ -10,11 +10,11 @@ import java.util.Set;
 public class DonneesSimulation {
     private Carte carte;
 
-    private Set<Incendie> incendies;
+    private List<Incendie> incendies;
 
     private List<AbstractRobot> robots;
 
-    public DonneesSimulation(Carte carte, Set<Incendie> incendies, List<AbstractRobot> robots) {
+    public DonneesSimulation(Carte carte, List<Incendie> incendies, List<AbstractRobot> robots) {
         this.carte = carte;
         this.incendies = incendies;
         this.robots = robots;
@@ -24,7 +24,7 @@ public class DonneesSimulation {
         return carte;
     }
 
-    public Set<Incendie> getIncendies() {
+    public List<Incendie> getIncendies() {
         return incendies;
     }
 

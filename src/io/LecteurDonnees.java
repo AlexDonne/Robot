@@ -8,6 +8,7 @@ import Environnement.NatureTerrain;
 import java.io.*;
 import java.util.*;
 import java.util.zip.DataFormatException;
+
 import Robots.TypesRobot;
 
 
@@ -34,6 +35,7 @@ import Robots.TypesRobot;
 public class LecteurDonnees {
 
     private Carte carte;
+
     /**
      * Lit et affiche le contenu d'un fichier de donnees (cases,
      * robots et incendies).
@@ -121,7 +123,7 @@ public class LecteurDonnees {
 
             System.out.print("nature = " + chaineNature);
 
-            return  NatureTerrain.valueOf(chaineNature);
+            return NatureTerrain.valueOf(chaineNature);
 
         } catch (NoSuchElementException e) {
             throw new DataFormatException("format de case invalide. "
@@ -133,8 +135,8 @@ public class LecteurDonnees {
     /**
      * Lit et affiche les donnees des incendies.
      */
-    private Set<Incendie> lireIncendies() throws DataFormatException {
-        Set<Incendie> incendies = new HashSet<>();
+    private List<Incendie> lireIncendies() throws DataFormatException {
+        List<Incendie> incendies = new ArrayList<>();
         ignorerCommentaires();
         try {
             int nbIncendies = scanner.nextInt();
@@ -226,11 +228,11 @@ public class LecteurDonnees {
             System.out.print("; \t vitesse = ");
             String s = scanner.findInLine("(\\d+)");    // 1 or more digit(s) ?
             // pour lire un flottant:    ("(\\d+(\\.\\d+)?)");
-
+            int vitesse = -1;
             if (s == null) {
                 System.out.print("valeur par defaut");
             } else {
-                int vitesse = Integer.parseInt(s);
+                vitesse = Integer.parseInt(s);
                 System.out.print(vitesse);
             }
             verifieLigneTerminee();
@@ -238,22 +240,29 @@ public class LecteurDonnees {
             System.out.println();
 
             TypesRobot typeRobot = TypesRobot.valueOf(type);
-            switch (typeRobot){
+            AbstractRobot robot;
+            switch (typeRobot) {
                 case ROUES:
-                    return new RobotRoues(this.carte.getCase(lig, col));
+                    robot = new RobotRoues(this.carte.getCase(lig, col));
+                    break;
 
                 case DRONE:
-                    return new RobotAerien(this.carte.getCase(lig, col));
-
-                case CHENILLES:
-                    return new RobotChenilles(this.carte.getCase(lig, col));
-
+                    robot = new RobotAerien(this.carte.getCase(lig, col));
+                    break;
+                case CHENILLE:
+                    robot = new RobotChenille(this.carte.getCase(lig, col));
+                    break;
                 case PATTES:
-                    return new RobotPattes(this.carte.getCase(lig, col));
-
+                    robot = new RobotPattes(this.carte.getCase(lig, col));
+                    break;
                 default:
                     throw new DataFormatException("Type non connu");
             }
+            if (vitesse != -1) {
+                robot.setVitesse(vitesse);
+            }
+
+            return robot;
 
         } catch (NoSuchElementException e) {
             throw new DataFormatException("format de robot invalide. "

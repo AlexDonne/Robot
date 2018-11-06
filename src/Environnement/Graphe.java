@@ -1,7 +1,9 @@
-package  Environnement;
+package Environnement;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import Robots.AbstractRobot;
+import Robots.TypesRobot;
+
+import java.util.*;
 
 public class Graphe {
     private int n; //nombre de sommets
@@ -26,19 +28,20 @@ public class Graphe {
         this.matriceAdjacence[j][i] = val;
     }
 
-    private static int marquerSommetSuivant(int[] sommetPrec, double[] distance, boolean[] estMarque, int n) {
+    private static int marquerSommetSuivant(int[] sommetPrec, double[] distance, boolean[] estMarque, int n) throws Exception {
         int i = 0;
         while ((i < n) && (estMarque[i] || distance[i] < 0)) {
             i++;
         }
         if (i == n) {
-            throw new IllegalArgumentException("Plus de sommet à marquer. Le chemin n'existe pas !");
+            throw new Exception("Plus de sommet à marquer. Le chemin n'existe pas !");
         }
         int k = i;
         double distMin = distance[i];
         for (int j = i + 1; j < n; j++) {
             if (!estMarque[j] && 0 <= distance[j] && distance[j] < distMin) {
                 k = j;
+                distMin = distance[j];
             }
         }
         estMarque[k] = true;
@@ -64,7 +67,9 @@ public class Graphe {
         }
     }
 
-    public Itineraire dijkstra(int a, int b) {
+    public Itineraire dijkstra(Case depart, Case arrivee, Carte carte) throws Exception {
+        int a = depart.getLigne() * carte.getNbColonnes() + depart.getColonne();
+        int b = arrivee.getLigne() * carte.getNbColonnes() + arrivee.getColonne();
         int[] sommetPrec = new int[this.n]; // donne pour chaque sommet le sommet par lequel il est atteint
         double[] distance = new double[this.n]; // donne pour chaque sommet sa distance au sommet a
         boolean[] estMarque = new boolean[this.n]; // indique pour chaque sommet si le sommet est marque
@@ -89,33 +94,65 @@ public class Graphe {
             val = distance[c];
         }
 
-
-        // On retourne enfin la liste des sommets par lesquels passer
-        ArrayList<Integer> listeSommets = new ArrayList<Integer>();
-        ArrayList<Double> listeDistances = new ArrayList<>();
+        Map<Case, Double> mapItineraire = new HashMap<>();
         int sommet = b;
         double dist = val;
 
         while (sommet != a) {
-            listeSommets.add(sommet);
-            listeDistances.add(dist);
+            mapItineraire.put(carte.getCase(sommet / carte.getNbColonnes(), sommet % carte.getNbColonnes()), dist);
             sommet = sommetPrec[sommet];
             dist = distance[sommet];
         }
-        Collections.reverse(listeSommets);
-        Collections.reverse(listeDistances);
-        Itineraire itineraire = new Itineraire(listeSommets, listeDistances);
-        return itineraire;
+
+        return new Itineraire(mapItineraire);
     }
 
-    public void afficher() {
+    public Itineraire dijkstraEau(Case depart, Carte carte, AbstractRobot robot) throws Exception { // donne l'itinéraire pour aller à la case adjacente à de l'eau la plus proche
+        int a = depart.getLigne() * carte.getNbColonnes() + depart.getColonne();
+        int[] sommetPrec = new int[this.n]; // donne pour chaque sommet le sommet par lequel il est atteint
+        double[] distance = new double[this.n]; // donne pour chaque sommet sa distance au sommet a
+        boolean[] estMarque = new boolean[this.n]; // indique pour chaque sommet si le sommet est marque
+
+        // initialisation
         for (int i = 0; i < this.n; i++) {
-            for (int j = 0; j < this.n; j++) {
-                System.out.print(this.matriceAdjacence[i][j]);
-                System.out.print(" ; ");
-            }
-            System.out.println();
+            sommetPrec[i] = -1;
+            distance[i] = -1;
+            estMarque[i] = false;
         }
+        sommetPrec[a] = a;
+        distance[a] = 0;
+        estMarque[a] = true;
+
+        int c = a;
+        Case inter = depart;
+        double val = 0;
+        if (robot.getType().equals(TypesRobot.DRONE)) {
+            while (inter.getNatureTerrain().equals(NatureTerrain.EAU)) {
+                this.mise_a_jour(sommetPrec, distance, estMarque, val, c);
+                c = Graphe.marquerSommetSuivant(sommetPrec, distance, estMarque, this.n);
+                val = distance[c];
+                inter = carte.getCase(c / carte.getNbColonnes(), c % carte.getNbColonnes());
+            }
+        } else {
+            while (!carte.eauAdjacente(inter)) {
+                this.mise_a_jour(sommetPrec, distance, estMarque, val, c);
+                c = Graphe.marquerSommetSuivant(sommetPrec, distance, estMarque, this.n);
+                val = distance[c];
+                inter = carte.getCase(c / carte.getNbColonnes(), c % carte.getNbColonnes());
+            }
+        }
+        // On retourne enfin la liste des sommets par lesquels passer
+        Map<Case, Double> mapItineraire = new HashMap<>();
+        int sommet = c;
+        double dist = val;
+
+        while (sommet != a) {
+            mapItineraire.put(carte.getCase(sommet / carte.getNbColonnes(), sommet % carte.getNbColonnes()), dist);
+            sommet = sommetPrec[sommet];
+            dist = distance[sommet];
+        }
+
+        return new Itineraire(mapItineraire);
     }
 
 
