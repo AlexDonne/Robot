@@ -52,11 +52,11 @@ public class Simulateur implements Simulable {
             }
         }
         for(Incendie incendie : this.donneesSimulation.getIncendies()){
-            guiSimulator.addGraphicalElement(new ImageElement(incendie.getPosition().getLigne() * 100 + 15, incendie.getPosition().getColonne() *100 + 15, "images/flammes.png", 80, 80, null));
+            guiSimulator.addGraphicalElement(new ImageElement(incendie.getPosition().getColonne() * 100 + 15, incendie.getPosition().getLigne() *100 + 15, "images/flammes.png", 80, 80, null));
         }
 
         for (AbstractRobot robot : this.donneesSimulation.getRobots()) {
-            guiSimulator.addGraphicalElement(new ImageElement(robot.getPosition().getLigne() * 100 + 20, robot.getPosition().getColonne() *100 + 20, robot.getType().getUrl(), 60, 60, null));
+            guiSimulator.addGraphicalElement(new ImageElement(robot.getPosition().getColonne() * 100 + 20, robot.getPosition().getLigne() *100 + 20, robot.getType().getUrl(), 60, 60, null));
         }
 
     }
