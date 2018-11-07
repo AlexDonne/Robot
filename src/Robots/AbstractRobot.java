@@ -60,17 +60,6 @@ public abstract class AbstractRobot {
         this.occupe = occupe;
     }
 
-    public boolean peutAller(Carte carte, Case positionFuture) {
-        Graphe graphe = carte.toGraphe(this);
-        try {
-            graphe.dijkstra(this.position, positionFuture, carte);
-        } catch (Exception e) {
-            return false;
-        }
-
-        return true;
-    }
-
     /**
      * Eteint incendie, si reservoir vide au début, va se recharger et l'incendie sera pris en charge par un autre
      *
@@ -78,30 +67,36 @@ public abstract class AbstractRobot {
      * @param incendie
      * @param simulateur
      */
-    public void seChargerDeLincendie(Carte carte, Incendie incendie, Simulateur simulateur) {
+    public boolean seChargeDeLincendie(Carte carte, Incendie incendie, Simulateur simulateur) {
         Graphe graphe = carte.toGraphe(this);
         if (this.reservoir == 0) {
             this.seRecharger(carte, simulateur, graphe);
-            return;
+            return false;
         }
         Itineraire itineraire;
 
+
+
         try {
             itineraire = graphe.dijkstra(this.position, incendie.getPosition(), carte);
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return;
+            return false;
         }
-        this.creerDeplacements(carte, itineraire, simulateur);
+        this.setOccupe(true);
+        this.creerDeplacements(itineraire, simulateur);
+        System.out.println("Voici l'itinéraire inversé: " + itineraire);
         incendie.prendreEnCharge();
+        double temps = itineraire.getMapItineraire().isEmpty() ? 0 : itineraire.getMapItineraire().get(0).getTemps();
+        simulateur.ajouteEvenement(new EvenementEteindreIncendie(Math.round(temps + simulateur.getDateSimulation()), incendie, this));
 
-        simulateur.ajouteEvenement(new EvenementEteindreIncendie(Math.round(itineraire.getMapItineraire().get(incendie.getPosition()) + simulateur.getDateSimulation()), incendie, this));
+        return true;
     }
 
-    private void creerDeplacements(Carte carte, Itineraire itineraire, Simulateur simulateur) {
-        this.occupe = true;
-        for (Map.Entry<Case, Double> entry : itineraire.getMapItineraire().entrySet()) {
-            EvenementDeplacer e = new EvenementDeplacer(Math.round(entry.getValue() + simulateur.getDateSimulation()), this, entry.getKey());
+    private void creerDeplacements(Itineraire itineraire, Simulateur simulateur) {
+        for (ElementItineraire elementItineraire : itineraire.getMapItineraire()) {
+            EvenementDeplacer e = new EvenementDeplacer(Math.round(elementItineraire.getTemps() + simulateur.getDateSimulation()), this, elementItineraire.getPosition());
             simulateur.ajouteEvenement(e);
         }
     }
@@ -112,11 +107,11 @@ public abstract class AbstractRobot {
         try {
             iti = graphe.dijkstraEau(this.position, carte, this);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return;
         }
 
-        this.creerDeplacements(carte, iti, simulateur);
+        this.creerDeplacements(iti, simulateur);
 
         int taille = iti.getMapItineraire().size();
 
@@ -125,7 +120,7 @@ public abstract class AbstractRobot {
             EvenementFinRechargementRobot e = new EvenementFinRechargementRobot(t + 3, this); // tous les robots mettent 3 pour se remplir (le niveau d'eau du robot est actualisé lors de l'éxécution de cet évènement ainsi que sa liberté)
             simulateur.ajouteEvenement(e);
         } else {
-            EvenementFinRechargementRobot e = new EvenementFinRechargementRobot(3 + t + Math.round((Double) iti.getMapItineraire().values().toArray()[taille - 1]), this); // tous les robots mettent 3 pour se remplir (le niveau d'eau du robot est actualisé los de l'éxécution de cet évènement)
+            EvenementFinRechargementRobot e = new EvenementFinRechargementRobot(3 + t + Math.round(iti.getMapItineraire().get(0).getTemps()), this); // tous les robots mettent 3 pour se remplir (le niveau d'eau du robot est actualisé los de l'éxécution de cet évènement)
             simulateur.ajouteEvenement(e);
         }
     }

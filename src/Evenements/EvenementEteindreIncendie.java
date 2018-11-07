@@ -17,13 +17,14 @@ public class EvenementEteindreIncendie extends Evenement {
     @Override
     public void execute() {
         int vol;
-        if (incendie.getEauNecessaire() > robot.getReservoir()) {
+        if ((incendie.getEauNecessaire() <= robot.getReservoir()) || robot.getReservoir() == -1) {
+            vol = incendie.getEauNecessaire();
+            incendie.setEauNecessaire(0);
+        } else {
             vol = robot.getReservoir();
             incendie.setEauNecessaire(incendie.getEauNecessaire() - robot.getReservoir());
             incendie.plusPrisEnCharge();
-        } else {
-            vol = incendie.getEauNecessaire();
-            incendie.setEauNecessaire(0);
+
         }
         this.robot.deverserEauSurIncendie(vol);
         System.out.println(vol + " déversé sur incendie en case " + incendie.getPosition().getLigne() + "-" + incendie.getPosition().getColonne());

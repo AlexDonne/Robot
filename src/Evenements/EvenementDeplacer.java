@@ -2,6 +2,7 @@ package Evenements;
 
 import Environnement.Case;
 import Robots.AbstractRobot;
+import Robots.TypesRobot;
 
 public class EvenementDeplacer extends Evenement {
     private AbstractRobot robot;
@@ -15,7 +16,10 @@ public class EvenementDeplacer extends Evenement {
 
     @Override
     public void execute() {
+
+
         System.out.printf("Déplacement de %d-%d en %d-%d \n", robot.getPosition().getLigne(), robot.getPosition().getColonne(), arrivee.getLigne(), arrivee.getColonne());
+
         this.robot.setPosition(this.arrivee);
     }
 }

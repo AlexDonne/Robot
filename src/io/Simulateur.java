@@ -53,8 +53,7 @@ public class Simulateur implements Simulable {
                 if (robot.isOccupe()) {
                     continue;
                 }
-                if (robot.peutAller(this.donneesSimulation.getCarte(), incendie.getPosition())) {
-                    robot.seChargerDeLincendie(this.donneesSimulation.getCarte(), incendie, this);
+                if (robot.seChargeDeLincendie(this.donneesSimulation.getCarte(), incendie, this)) {
                     break;
                 }
             }
@@ -85,7 +84,7 @@ public class Simulateur implements Simulable {
                     new ImageElement(incendie.getPosition().getColonne() * 100 + 15, incendie.getPosition().getLigne() * 100 + 15, "images/flammes.png", 80, 80, null)
             );
             guiSimulator.addGraphicalElement(
-                    new Text(incendie.getPosition().getColonne() * 100 + 50, incendie.getPosition().getLigne() * 100 + 50, Color.RED, Integer.toString(incendie.getEauNecessaire()))
+                    new Text(incendie.getPosition().getColonne() * 100 + 50, incendie.getPosition().getLigne() * 100 + 10, Color.RED, Integer.toString(incendie.getEauNecessaire()))
             );
         }
 
@@ -94,7 +93,7 @@ public class Simulateur implements Simulable {
                     new ImageElement(robot.getPosition().getColonne() * 100 + 20, robot.getPosition().getLigne() *100 + 20, robot.getType().getUrl(), 60, 60, null)
             );
             guiSimulator.addGraphicalElement(
-                    new Text(robot.getPosition().getColonne() * 100 + 50, robot.getPosition().getLigne() * 100 + 50, Color.BLACK, Integer.toString(robot.getReservoir()))
+                    new Text(robot.getPosition().getColonne() * 100 + 50, robot.getPosition().getLigne() * 100 + 90, Color.BLACK, Integer.toString(robot.getReservoir()))
             );
         }
 
@@ -102,10 +101,11 @@ public class Simulateur implements Simulable {
 
     @Override
     public void next() {
-        incrementeDate(1);
+        System.out.println("Time : " + this.dateSimulation);
         execute();
         prendreDecisions();
         draw();
+        incrementeDate(1);
     }
 
     @Override

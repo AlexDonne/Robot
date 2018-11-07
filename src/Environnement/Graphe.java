@@ -94,12 +94,12 @@ public class Graphe {
             val = distance[c];
         }
 
-        Map<Case, Double> mapItineraire = new HashMap<>();
+        List<ElementItineraire> mapItineraire = new ArrayList<ElementItineraire>();
         int sommet = b;
         double dist = val;
 
         while (sommet != a) {
-            mapItineraire.put(carte.getCase(sommet / carte.getNbColonnes(), sommet % carte.getNbColonnes()), dist);
+            mapItineraire.add(new ElementItineraire(carte.getCase(sommet / carte.getNbColonnes(), sommet % carte.getNbColonnes()), dist));
             sommet = sommetPrec[sommet];
             dist = distance[sommet];
         }
@@ -127,7 +127,7 @@ public class Graphe {
         Case inter = depart;
         double val = 0;
         if (robot.getType().equals(TypesRobot.DRONE)) {
-            while (inter.getNatureTerrain().equals(NatureTerrain.EAU)) {
+            while (!inter.getNatureTerrain().equals(NatureTerrain.EAU)) {
                 this.mise_a_jour(sommetPrec, distance, estMarque, val, c);
                 c = Graphe.marquerSommetSuivant(sommetPrec, distance, estMarque, this.n);
                 val = distance[c];
@@ -142,12 +142,12 @@ public class Graphe {
             }
         }
         // On retourne enfin la liste des sommets par lesquels passer
-        Map<Case, Double> mapItineraire = new HashMap<>();
+        List<ElementItineraire> mapItineraire = new ArrayList<ElementItineraire>();
         int sommet = c;
         double dist = val;
 
         while (sommet != a) {
-            mapItineraire.put(carte.getCase(sommet / carte.getNbColonnes(), sommet % carte.getNbColonnes()), dist);
+            mapItineraire.add(new ElementItineraire(carte.getCase(sommet / carte.getNbColonnes(), sommet % carte.getNbColonnes()), dist));
             sommet = sommetPrec[sommet];
             dist = distance[sommet];
         }

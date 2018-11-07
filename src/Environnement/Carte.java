@@ -38,19 +38,19 @@ public class Carte {
         return cases[ligne][colonne];
     }
 
-    public boolean voisinExiste(Case src, Direction dir) {
+    public boolean voisinExisteEau(Case src, Direction dir) {
         switch (dir) {
             case NORD:
-                return src.getLigne() != 0;
+                return src.getLigne() != 0 && this.getCase(src.getLigne()-1, src.getColonne()).getNatureTerrain().equals(NatureTerrain.EAU);
 
             case EST:
-                return src.getColonne() != nbColonnes - 1;
+                return src.getColonne() != nbColonnes - 1 && this.getCase(src.getLigne(), src.getColonne()+1).getNatureTerrain().equals(NatureTerrain.EAU);
 
             case SUD:
-                return src.getLigne() != nbLignes - 1;
+                return src.getLigne() != nbLignes - 1 && this.getCase(src.getLigne()+1, src.getColonne()).getNatureTerrain().equals(NatureTerrain.EAU);
 
             case OUEST:
-                return src.getColonne() != 0;
+                return src.getColonne() != 0 && this.getCase(src.getLigne(), src.getColonne()-1).getNatureTerrain().equals(NatureTerrain.EAU);
 
             default:
                 throw new IllegalArgumentException("Direction n'existe pas");
@@ -84,56 +84,9 @@ public class Carte {
     }
 
     public boolean eauAdjacente(Case position){
-        int i = position.getLigne();
-        int j = position.getColonne();
-        if (0 < i && i < this.nbLignes - 1) {
-            if (0 < j && j < this.nbColonnes - 1) {
-                return this.cases[i-1][j].getNatureTerrain().equals(NatureTerrain.EAU)
-                        || this.cases[i+1][j].getNatureTerrain().equals(NatureTerrain.EAU)
-                        || this.cases[i][j+1].getNatureTerrain().equals(NatureTerrain.EAU)
-                        || this.cases[i][j-1].getNatureTerrain().equals(NatureTerrain.EAU);
-            }
-            if (j == 0) {
-                return this.cases[i-1][j].getNatureTerrain().equals(NatureTerrain.EAU)
-                        || this.cases[i+1][j].getNatureTerrain().equals(NatureTerrain.EAU)
-                        || this.cases[i][j+1].getNatureTerrain().equals(NatureTerrain.EAU);
-            }
-            if (j == this.nbColonnes - 1) {
-                return this.cases[i-1][j].getNatureTerrain().equals(NatureTerrain.EAU)
-                        || this.cases[i+1][j].getNatureTerrain().equals(NatureTerrain.EAU)
-                        || this.cases[i][j-1].getNatureTerrain().equals(NatureTerrain.EAU);
-            }
-        }
-        if (i == 0) {
-            if (0 < j && j < this.nbColonnes - 1) {
-                return this.cases[i+1][j].getNatureTerrain().equals(NatureTerrain.EAU)
-                        || this.cases[i][j+1].getNatureTerrain().equals(NatureTerrain.EAU)
-                        || this.cases[i][j-1].getNatureTerrain().equals(NatureTerrain.EAU);
-            }
-            if (j == 0) {
-                return this.cases[i+1][j].getNatureTerrain().equals(NatureTerrain.EAU)
-                        || this.cases[i][j+1].getNatureTerrain().equals(NatureTerrain.EAU);
-            }
-            if (j == this.nbColonnes - 1) {
-                return this.cases[i+1][j].getNatureTerrain().equals(NatureTerrain.EAU)
-                        || this.cases[i][j-1].getNatureTerrain().equals(NatureTerrain.EAU);
-            }
-        }
-        if (i == this.nbLignes - 1) {
-            if (0 < j && j < this.nbColonnes - 1) {
-                return this.cases[i-1][j].getNatureTerrain().equals(NatureTerrain.EAU)
-                        || this.cases[i][j+1].getNatureTerrain().equals(NatureTerrain.EAU)
-                        || this.cases[i][j-1].getNatureTerrain().equals(NatureTerrain.EAU);
-            }
-            if (j == 0) {
-                return this.cases[i-1][j].getNatureTerrain().equals(NatureTerrain.EAU)
-                        || this.cases[i][j+1].getNatureTerrain().equals(NatureTerrain.EAU) ;
-            }
-            if (j == this.nbColonnes - 1) {
-                return this.cases[i-1][j].getNatureTerrain().equals(NatureTerrain.EAU)
-                        || this.cases[i][j-1].getNatureTerrain().equals(NatureTerrain.EAU);
-            }
-        }
-        throw new IllegalArgumentException("Case hors carte");
+        return this.voisinExisteEau(position, Direction.NORD)
+                || this.voisinExisteEau(position, Direction.EST)
+                || this.voisinExisteEau(position, Direction.OUEST)
+                || this.voisinExisteEau(position, Direction.SUD);
     }
 }

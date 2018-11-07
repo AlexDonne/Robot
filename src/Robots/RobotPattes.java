@@ -16,6 +16,11 @@ public class RobotPattes extends RobotTerrestre{
     }
 
     @Override
+    public void deverserEauSurIncendie(int vol) {
+        this.setOccupe(false);
+    }
+
+    @Override
     public TypesRobot getType() {
         return TypesRobot.PATTES;
     }

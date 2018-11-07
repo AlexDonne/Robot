@@ -5,9 +5,9 @@ import java.awt.*;
 public enum NatureTerrain {
     EAU(Color.BLUE),
     FORET(Color.GREEN),
-    ROCHE(Color.DARK_GRAY),
+    ROCHE(Color.lightGray),
     TERRAIN_LIBRE(Color.ORANGE),
-    HABITAT(Color.BLACK);
+    HABITAT(Color.yellow);
 
     private Color color;
 
