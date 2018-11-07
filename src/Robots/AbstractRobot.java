@@ -80,7 +80,7 @@ public abstract class AbstractRobot {
      */
     public void seChargerDeLincendie(Carte carte, Incendie incendie, Simulateur simulateur) {
         Graphe graphe = carte.toGraphe(this);
-        if (this.reservoir <= 0 && this.getType() != TypesRobot.PATTES) {
+        if (this.reservoir == 0) {
             this.seRecharger(carte, simulateur, graphe);
             return;
         }
@@ -120,7 +120,7 @@ public abstract class AbstractRobot {
 
         int taille = iti.getMapItineraire().size();
 
-        this.setOccupe(false); // le robot n'est plus libre;
+        this.setOccupe(true); // le robot n'est plus libre;
         if (taille == 0) { // le robot est déjà sur place
             EvenementFinRechargementRobot e = new EvenementFinRechargementRobot(t + 3, this); // tous les robots mettent 3 pour se remplir (le niveau d'eau du robot est actualisé lors de l'éxécution de cet évènement ainsi que sa liberté)
             simulateur.ajouteEvenement(e);

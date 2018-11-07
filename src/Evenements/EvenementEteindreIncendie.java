@@ -20,12 +20,12 @@ public class EvenementEteindreIncendie extends Evenement {
         if (incendie.getEauNecessaire() > robot.getReservoir()) {
             vol = robot.getReservoir();
             incendie.setEauNecessaire(incendie.getEauNecessaire() - robot.getReservoir());
+            incendie.plusPrisEnCharge();
         } else {
-            vol = robot.getReservoir() - incendie.getEauNecessaire();
+            vol = incendie.getEauNecessaire();
             incendie.setEauNecessaire(0);
         }
         this.robot.deverserEauSurIncendie(vol);
-        incendie.plusPrisEnCharge();
         System.out.println(vol + " déversé sur incendie en case " + incendie.getPosition().getLigne() + "-" + incendie.getPosition().getColonne());
         System.out.println("Reste à déverser " + incendie.getEauNecessaire());
     }
