@@ -38,4 +38,8 @@ public class Incendie {
     public void setEauNecessaire(int eauNecessaire) {
         this.eauNecessaire = eauNecessaire;
     }
+
+    public boolean estEteint(){
+        return this.eauNecessaire == 0;
+    }
 }

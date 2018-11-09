@@ -18,6 +18,9 @@ public abstract class AbstractRobot {
      */
     protected int reservoir;
 
+    /**
+     * En m/h
+     */
     protected int vitesse;
 
     protected boolean occupe = false;
@@ -98,19 +101,19 @@ public abstract class AbstractRobot {
             return false;
         }
         Itineraire itineraire;
-
-
         try {
             itineraire = graphe.dijkstra(this.position, incendie.getPosition(), carte);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return false;
         }
+
         this.setOccupe(true);
         this.creerDeplacements(itineraire, simulateur);
         System.out.println("Voici l'itinéraire inversé: " + itineraire);
         incendie.setPrisEnCharge(true);
+
         double temps = itineraire.getMapItineraire().isEmpty() ? 0 : itineraire.getMapItineraire().get(0).getTemps();
         simulateur.ajouteEvenement(new EvenementDeverserEauSurIncendie(Math.round(temps + simulateur.getDateSimulation()), incendie, this));
 

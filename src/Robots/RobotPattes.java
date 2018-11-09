@@ -35,6 +35,6 @@ public class RobotPattes extends AbstractRobot {
 
     @Override
     double getTempsOperation(int vol) {
-        return vol / 600;
+        return vol * 0.1;
     }
 }

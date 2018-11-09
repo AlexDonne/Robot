@@ -32,6 +32,6 @@ public class RobotAerien extends AbstractRobot{
 
     @Override
     double getTempsOperation(int vol) {
-        return 0.5;
+        return 30;
     }
 }

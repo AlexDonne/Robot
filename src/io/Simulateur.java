@@ -1,5 +1,7 @@
 package io;
 
+import Decision.ChefPompier;
+import Decision.IStrategie;
 import Environnement.Incendie;
 import Evenements.Evenement;
 import Robots.AbstractRobot;
@@ -28,21 +30,22 @@ public class Simulateur implements Simulable {
 
     private DonneesSimulation donneesSimulation;
 
+    private ChefPompier chefPompier;
     /**
      * Nom du fichier de la map
      */
     private String fichier;
 
-    public Simulateur(long dateSimulation, String fichier) {
+    /**
+     *
+     * @param dateSimulation
+     * @param fichier
+     * @param strategie, la stratégie que va adopter le chef pompier
+     */
+    public Simulateur(long dateSimulation, String fichier, IStrategie strategie) {
         this.fichier = fichier;
         this.dateSimulation = dateSimulation;
         this.listeEvenements = new LinkedList<>();
-    }
-
-    /**
-     * Initialise la simulation, lance la prise des premières decisions et dessine l'interface
-     */
-    public void start() {
         try {
             this.donneesSimulation = LecteurDonnees.lire(fichier);
         } catch (FileNotFoundException e) {
@@ -52,28 +55,18 @@ public class Simulateur implements Simulable {
         }
         this.guiSimulator = new GUISimulator(this.donneesSimulation.getCarte().getNbLignes() * 100, this.donneesSimulation.getCarte().getNbColonnes() * 100, Color.BLACK);
         guiSimulator.setSimulable(this);
-        prendreDecisions();
-        draw();
+        this.chefPompier = new ChefPompier(this.donneesSimulation, strategie);
     }
 
     /**
-     * Parcourt les incendies et les assigne à des robots libres
+     * Initialise la simulation, lance la prise des premières decisions et dessine l'interface
      */
-    private void prendreDecisions() {
-        for (Incendie incendie : this.donneesSimulation.getIncendies()) {
-            if (incendie.estPrisEnCharge()) {
-                continue;
-            }
-            for (AbstractRobot robot : this.donneesSimulation.getRobots()) {
-                if (robot.isOccupe()) {
-                    continue;
-                }
-                if (robot.seChargeDeLincendie(this.donneesSimulation.getCarte(), incendie, this)) {
-                    break;
-                }
-            }
-        }
+    public void start() {
+        this.chefPompier.prendreDecisions(this);
+        draw();
     }
+
+
 
     /**
      * Execute tous les evenements dont la date est inférieur à la dete de simulation, les supprime ensuite de la liste (pour ne pas les réexecuter)
@@ -83,8 +76,7 @@ public class Simulateur implements Simulable {
             this.listeEvenements.get(0).execute();
             this.listeEvenements.remove(0);
         }
-
-        this.donneesSimulation.getIncendies().removeIf(incendie -> incendie.getEauNecessaire() == 0);
+        this.donneesSimulation.getIncendies().removeIf(incendie -> incendie.estEteint());
     }
 
 
@@ -155,9 +147,9 @@ public class Simulateur implements Simulable {
     public void next() {
         System.out.println("Time : " + this.dateSimulation);
         execute();
-        prendreDecisions();
+        this.chefPompier.prendreDecisions(this);
         draw();
-        incrementeDate(1);
+        incrementeDate(60);
     }
 
     @Override
@@ -171,7 +163,7 @@ public class Simulateur implements Simulable {
         } catch (DataFormatException e) {
             System.out.println("Data not in good format");
         }
-        prendreDecisions();
+        this.chefPompier.prendreDecisions(this);
         draw();
     }
 

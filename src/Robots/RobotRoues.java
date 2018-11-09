@@ -21,6 +21,6 @@ public class RobotRoues extends AbstractRobot {
 
     @Override
     double getTempsOperation(int vol) {
-        return vol / 1200;
+        return vol * 0.05;
     }
 }

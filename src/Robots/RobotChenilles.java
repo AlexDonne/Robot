@@ -40,6 +40,6 @@ public class RobotChenilles extends AbstractRobot {
 
     @Override
     double getTempsOperation(int vol) {
-        return vol / 750;
+        return vol * 0.08;
     }
 }
