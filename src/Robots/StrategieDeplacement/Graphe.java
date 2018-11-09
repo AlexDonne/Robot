@@ -1,5 +1,6 @@
-package Environnement;
+package Robots.StrategieDeplacement;
 
+import Environnement.*;
 import Robots.AbstractRobot;
 import Robots.TypesRobot;
 
@@ -33,10 +34,10 @@ public class Graphe {
         Graphe graphe = new Graphe(carte.getNbLignes() * carte.getNbColonnes());
         for (int i = 0; i < carte.getNbLignes(); i++) {
             for (int j = 1; j < carte.getNbColonnes(); j++) {
-                if (robot.getType().getDeplacements().contains(carte.getCase(i,j - 1).getNatureTerrain()) && robot.getType().getDeplacements().contains(carte.getCase(i,j).getNatureTerrain())) {
+                if (robot.getType().getDeplacements().contains(carte.getCase(i, j - 1).getNatureTerrain()) && robot.getType().getDeplacements().contains(carte.getCase(i, j).getNatureTerrain())) {
                     double temps = 0;
-                    temps += ((float) carte.getTailleCases()) / robot.getVitesse(carte.getCase(i,j - 1).getNatureTerrain()) / 2;
-                    temps += ((float) carte.getTailleCases()) / robot.getVitesse(carte.getCase(i,j).getNatureTerrain()) / 2;
+                    temps += ((float) carte.getTailleCases()) / robot.getVitesse(carte.getCase(i, j - 1).getNatureTerrain()) / 2;
+                    temps += ((float) carte.getTailleCases()) / robot.getVitesse(carte.getCase(i, j).getNatureTerrain()) / 2;
                     temps *= 3600; //Pour convertir en secondes
                     graphe.ajouterArc(i * carte.getNbColonnes() + j - 1, i * carte.getNbColonnes() + j, temps);
                 }
@@ -44,10 +45,10 @@ public class Graphe {
         }
         for (int j = 0; j < carte.getNbColonnes(); j++) {
             for (int i = 1; i < carte.getNbLignes(); i++) {
-                if (robot.getType().getDeplacements().contains(carte.getCase(i-1,j).getNatureTerrain()) && robot.getType().getDeplacements().contains(carte.getCase(i,j).getNatureTerrain())) {
+                if (robot.getType().getDeplacements().contains(carte.getCase(i - 1, j).getNatureTerrain()) && robot.getType().getDeplacements().contains(carte.getCase(i, j).getNatureTerrain())) {
                     double temps = 0;
-                    temps += ((float) carte.getTailleCases()) / robot.getVitesse(carte.getCase(i-1,j).getNatureTerrain()) / 2;
-                    temps += ((float) carte.getTailleCases()) / robot.getVitesse(carte.getCase(i,j).getNatureTerrain()) / 2;
+                    temps += ((float) carte.getTailleCases()) / robot.getVitesse(carte.getCase(i - 1, j).getNatureTerrain()) / 2;
+                    temps += ((float) carte.getTailleCases()) / robot.getVitesse(carte.getCase(i, j).getNatureTerrain()) / 2;
                     temps *= 3600; //Pour convertir en secondes
                     graphe.ajouterArc((i - 1) * carte.getNbColonnes() + j, i * carte.getNbColonnes() + j, temps);
                 }
@@ -212,6 +213,4 @@ public class Graphe {
 
         return new Itineraire(mapItineraire);
     }
-
-
 }

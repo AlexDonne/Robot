@@ -74,7 +74,7 @@ public class Carte {
      * @param position
      * @return
      */
-    boolean eauAdjacente(Case position) {
+    public boolean eauAdjacente(Case position) {
         return this.voisinExisteEau(position, Direction.NORD)
                 || this.voisinExisteEau(position, Direction.EST)
                 || this.voisinExisteEau(position, Direction.OUEST)
