@@ -1,9 +1,9 @@
 package Evenements;
 
 public abstract class Evenement {
-    private long date;
+    protected long date;
 
-    public Evenement(long date) {
+    protected Evenement(long date) {
         this.date = date;
     }
 

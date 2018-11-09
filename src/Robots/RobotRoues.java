@@ -2,11 +2,11 @@ package Robots;
 
 import Environnement.Case;
 
-public class RobotRoues extends RobotTerrestre{
-    public RobotRoues(Case position){
+public class RobotRoues extends AbstractRobot {
+    public RobotRoues(Case position) {
         super(position);
         this.reservoir = 5000;
-        this.vitesse = 80;
+        this.vitesse = 80000;
     }
 
     @Override
@@ -17,5 +17,10 @@ public class RobotRoues extends RobotTerrestre{
     @Override
     public TypesRobot getType() {
         return TypesRobot.ROUES;
+    }
+
+    @Override
+    double getTempsOperation(int vol) {
+        return vol / 1200;
     }
 }

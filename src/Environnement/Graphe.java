@@ -23,6 +23,12 @@ public class Graphe {
         }
     }
 
+    /**
+     * ajoute l'arc entre les sommets i et j au graphe
+     * @param i
+     * @param j
+     * @param val
+     */
     public void ajouterArc(int i, int j, double val) {
         this.matriceAdjacence[i][j] = val;
         this.matriceAdjacence[j][i] = val;
@@ -67,6 +73,14 @@ public class Graphe {
         }
     }
 
+    /**
+     * Retourne le plus court itinéraire entre 2 cases
+     * @param depart
+     * @param arrivee
+     * @param carte
+     * @return
+     * @throws Exception
+     */
     public Itineraire dijkstra(Case depart, Case arrivee, Carte carte) throws Exception {
         int a = depart.getLigne() * carte.getNbColonnes() + depart.getColonne();
         int b = arrivee.getLigne() * carte.getNbColonnes() + arrivee.getColonne();
@@ -107,6 +121,14 @@ public class Graphe {
         return new Itineraire(mapItineraire);
     }
 
+    /**
+     * Retourne le plus court itineraire qui mène à une case d'eau
+     * @param depart
+     * @param carte
+     * @param robot
+     * @return
+     * @throws Exception
+     */
     public Itineraire dijkstraEau(Case depart, Carte carte, AbstractRobot robot) throws Exception { // donne l'itinéraire pour aller à la case adjacente à de l'eau la plus proche
         int a = depart.getLigne() * carte.getNbColonnes() + depart.getColonne();
         int[] sommetPrec = new int[this.n]; // donne pour chaque sommet le sommet par lequel il est atteint

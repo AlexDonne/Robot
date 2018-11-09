@@ -3,11 +3,11 @@ package Robots;
 import Environnement.Case;
 import Environnement.NatureTerrain;
 
-public class RobotPattes extends RobotTerrestre{
-    public RobotPattes(Case position){
+public class RobotPattes extends AbstractRobot {
+    public RobotPattes(Case position) {
         super(position);
         this.reservoir = -1; //Infini
-        this.vitesse = 30;
+        this.vitesse = 30000;
     }
 
     @Override
@@ -16,8 +16,8 @@ public class RobotPattes extends RobotTerrestre{
     }
 
     @Override
-    public void deverserEauSurIncendie(int vol) {
-        this.setOccupe(false);
+    public double deverserEauSurIncendie(int vol) {
+        return this.getTempsOperation(vol);
     }
 
     @Override
@@ -27,9 +27,14 @@ public class RobotPattes extends RobotTerrestre{
 
     @Override
     public int getVitesse(NatureTerrain natureTerrain) {
-        if (natureTerrain == NatureTerrain.ROCHE){
-            return 10;
+        if (natureTerrain == NatureTerrain.ROCHE) {
+            return 10000;
         }
         return this.vitesse;
+    }
+
+    @Override
+    double getTempsOperation(int vol) {
+        return vol / 600;
     }
 }

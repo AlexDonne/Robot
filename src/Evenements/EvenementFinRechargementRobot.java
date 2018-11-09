@@ -2,6 +2,9 @@ package Evenements;
 
 import Robots.AbstractRobot;
 
+/**
+ * Evénement qui représente le rechargement d'un robot
+ */
 public class EvenementFinRechargementRobot extends Evenement {
 
     private AbstractRobot robot;
@@ -11,6 +14,9 @@ public class EvenementFinRechargementRobot extends Evenement {
         this.robot = robot;
     }
 
+    /**
+     * Remplit réservoir du robot et le libère
+     */
     @Override
     public void execute() {
         this.robot.remplirReservoir();

@@ -17,13 +17,20 @@ import java.util.zip.DataFormatException;
 
 public class Simulateur implements Simulable {
 
+    /**
+     * Liste des événements
+     */
     private List<Evenement> listeEvenements;
 
     private GUISimulator guiSimulator;
+
     private long dateSimulation;
 
     private DonneesSimulation donneesSimulation;
 
+    /**
+     * Nom du fichier de la map
+     */
     private String fichier;
 
     public Simulateur(long dateSimulation, String fichier) {
@@ -32,6 +39,9 @@ public class Simulateur implements Simulable {
         this.listeEvenements = new LinkedList<>();
     }
 
+    /**
+     * Initialise la simulation, lance la prise des premières decisions et dessine l'interface
+     */
     public void start() {
         try {
             this.donneesSimulation = LecteurDonnees.lire(fichier);
@@ -46,6 +56,9 @@ public class Simulateur implements Simulable {
         draw();
     }
 
+    /**
+     * Parcourt les incendies et les assigne à des robots libres
+     */
     private void prendreDecisions() {
         for (Incendie incendie : this.donneesSimulation.getIncendies()) {
             if (incendie.estPrisEnCharge()) {
@@ -62,6 +75,9 @@ public class Simulateur implements Simulable {
         }
     }
 
+    /**
+     * Execute tous les evenements dont la date est inférieur à la dete de simulation, les supprime ensuite de la liste (pour ne pas les réexecuter)
+     */
     private void execute() {
         while (!this.listeEvenements.isEmpty() && this.listeEvenements.get(0).getDate() <= this.dateSimulation) {
             this.listeEvenements.get(0).execute();
@@ -72,6 +88,9 @@ public class Simulateur implements Simulable {
     }
 
 
+    /**
+     * Dessine l'interface
+     */
     private void draw() {
         guiSimulator.reset();
         for (int i = 0; i < this.donneesSimulation.getCarte().getNbLignes(); i++) {
@@ -159,6 +178,7 @@ public class Simulateur implements Simulable {
     private void incrementeDate(int t) {
         this.dateSimulation += t;
     }
+
 
     public void ajouteEvenement(Evenement e) {
         int i = 0;

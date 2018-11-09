@@ -7,13 +7,13 @@ public class RobotAerien extends AbstractRobot{
     public RobotAerien(Case position){
         super(position);
         this.reservoir = 10000;
-        this.vitesse = 100;
+        this.vitesse = 100000;
     }
 
     @Override
     public void setVitesse(int vitesse) {
-        if (vitesse > 150) {
-            this.vitesse = 150;
+        if (vitesse > 150000) {
+            this.vitesse = 150000;
         }
         else {
             this.vitesse = vitesse;
@@ -28,5 +28,10 @@ public class RobotAerien extends AbstractRobot{
     @Override
     public TypesRobot getType() {
         return TypesRobot.DRONE;
+    }
+
+    @Override
+    double getTempsOperation(int vol) {
+        return 0.5;
     }
 }

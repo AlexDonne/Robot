@@ -5,7 +5,7 @@ import Robots.AbstractRobot;
 public class Carte {
 
     /**
-     * Taille cases en m
+     * Taille cases en mètres
      */
     private int tailleCases;
 
@@ -34,14 +34,17 @@ public class Carte {
         return nbColonnes;
     }
 
-    public int getTailleCases() {
-        return tailleCases;
-    }
-
     public Case getCase(int ligne, int colonne) {
         return cases[ligne][colonne];
     }
 
+    /**
+     * Regarde si une case voisine contient de l'eau
+     *
+     * @param src
+     * @param dir
+     * @return
+     */
     private boolean voisinExisteEau(Case src, Direction dir) {
         switch (dir) {
             case NORD:
@@ -61,15 +64,20 @@ public class Carte {
         }
     }
 
-
+    /**
+     * Pour un robot donné, transforme la carte en objet graphe
+     *
+     * @param robot
+     * @return
+     */
     public Graphe toGraphe(AbstractRobot robot) {
         Graphe graphe = new Graphe(this.nbLignes * this.nbColonnes);
         for (int i = 0; i < nbLignes; i++) {
             for (int j = 1; j < nbColonnes; j++) {
                 if (robot.getType().getDeplacements().contains(this.cases[i][j - 1].getNatureTerrain()) && robot.getType().getDeplacements().contains(this.cases[i][j].getNatureTerrain())) {
                     double temps = 0;
-                    temps += this.tailleCases / 1000 / robot.getVitesse(this.cases[i][j - 1].getNatureTerrain()) / 2;
-                    temps += this.tailleCases / 1000 /robot.getVitesse(this.cases[i][j].getNatureTerrain()) / 2;
+                    temps += this.tailleCases / robot.getVitesse(this.cases[i][j - 1].getNatureTerrain()) / 2;
+                    temps += this.tailleCases / robot.getVitesse(this.cases[i][j].getNatureTerrain()) / 2;
                     temps *= 60;
                     graphe.ajouterArc(i * nbColonnes + j - 1, i * nbColonnes + j, temps);
                 }
@@ -79,8 +87,8 @@ public class Carte {
             for (int i = 1; i < nbLignes; i++) {
                 if (robot.getType().getDeplacements().contains(this.cases[i - 1][j].getNatureTerrain()) && robot.getType().getDeplacements().contains(this.cases[i][j].getNatureTerrain())) {
                     double temps = 0;
-                    temps += this.tailleCases / 1000 / robot.getVitesse(this.cases[i - 1][j].getNatureTerrain()) / 2;
-                    temps += this.tailleCases / 1000 / robot.getVitesse(this.cases[i][j].getNatureTerrain()) / 2;
+                    temps += this.tailleCases / robot.getVitesse(this.cases[i - 1][j].getNatureTerrain()) / 2;
+                    temps += this.tailleCases / robot.getVitesse(this.cases[i][j].getNatureTerrain()) / 2;
                     temps *= 60;
                     graphe.ajouterArc((i - 1) * nbColonnes + j, i * nbColonnes + j, temps);
                 }
@@ -89,6 +97,12 @@ public class Carte {
         return graphe;
     }
 
+    /**
+     * Retourne true si le robot est à côté d'une case contenant de l'eau
+     *
+     * @param position
+     * @return
+     */
     boolean eauAdjacente(Case position) {
         return this.voisinExisteEau(position, Direction.NORD)
                 || this.voisinExisteEau(position, Direction.EST)

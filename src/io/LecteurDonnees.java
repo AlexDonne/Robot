@@ -39,10 +39,10 @@ public class LecteurDonnees {
     /**
      * Lit et affiche le contenu d'un fichier de donnees (cases,
      * robots et incendies).
-     * Ceci est méthode de classe; utilisation:
-     * LecteurDonnees.lire(fichierDonnees)
+     * Construit les différents objets (robots, incendies, carte ..) et créé un objet DonneesSimulation les contenant, puis le retourne
      *
      * @param fichierDonnees nom du fichier à lire
+     * @return donneesSimulation
      */
     public static DonneesSimulation lire(String fichierDonnees)
             throws FileNotFoundException, DataFormatException {
@@ -75,7 +75,7 @@ public class LecteurDonnees {
     /**
      * Lit et affiche les donnees de la carte.
      *
-     * @throws ExceptionFormatDonnees
+     * @throws DataFormatException
      */
     private Carte lireCarte() throws DataFormatException {
         ignorerCommentaires();
@@ -83,6 +83,7 @@ public class LecteurDonnees {
             int nbLignes = scanner.nextInt();
             int nbColonnes = scanner.nextInt();
             int tailleCases = scanner.nextInt();    // en m
+
             Carte carte = new Carte(nbLignes, nbColonnes, tailleCases);
             System.out.println("Carte " + nbLignes + "x" + nbColonnes
                     + "; taille des cases = " + tailleCases);
@@ -258,7 +259,7 @@ public class LecteurDonnees {
                     throw new DataFormatException("Type non connu");
             }
             if (vitesse != -1) {
-                robot.setVitesse(vitesse);
+                robot.setVitesse(vitesse * 1000);
             }
 
             return robot;
@@ -282,7 +283,7 @@ public class LecteurDonnees {
     /**
      * Verifie qu'il n'y a plus rien a lire sur cette ligne (int ou float).
      *
-     * @throws ExceptionFormatDonnees
+     * @throws DataFormatException
      */
     private void verifieLigneTerminee() throws DataFormatException {
         if (scanner.findInLine("(\\d+)") != null) {

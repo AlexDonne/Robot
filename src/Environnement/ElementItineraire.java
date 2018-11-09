@@ -1,9 +1,15 @@
 package Environnement;
 
-
+/**
+ * Classe qui représente un élément d'un itinéraire, qui associe une case à un temps
+ */
 public class ElementItineraire {
 
+    /**
+     * Temps qu'il faut pour aller à la case
+     */
     private double temps;
+
     private Case position;
 
     public ElementItineraire(Case position, double temps) {
@@ -21,7 +27,6 @@ public class ElementItineraire {
 
     @Override
     public String toString() {
-        String message = "(" + this.position.getLigne() + "," + this.position.getColonne() + "," + (double)(Math.round(this.temps*100)) / 100 + ")";
-        return message;
+        return "(" + this.position.getLigne() + "," + this.position.getColonne() + "," + (double) (Math.round(this.temps * 100)) / 100 + ")";
     }
 }

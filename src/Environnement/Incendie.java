@@ -3,8 +3,15 @@ package Environnement;
 public class Incendie {
 
     private Case position;
-    private long dateFin = -1; //pas encore eteint, on ne connait pas la date;
+
+    /**
+     * True si un robot s'occupe de l'incendie
+     */
     private boolean prisEnCharge = false;
+
+    /**
+     * quantité d'eau nécessaire pour éteindre l'incendie
+     */
     private int eauNecessaire;
 
     public Incendie(Case position, int eauNecessaire) {
@@ -12,16 +19,12 @@ public class Incendie {
         this.eauNecessaire = eauNecessaire;
     }
 
+    public void setPrisEnCharge(boolean prisEnCharge) {
+        this.prisEnCharge = prisEnCharge;
+    }
+
     public boolean estPrisEnCharge() {
         return this.prisEnCharge;
-    }
-
-    public void prendreEnCharge() {
-        this.prisEnCharge = true;
-    }
-
-    public void plusPrisEnCharge(){
-        this.prisEnCharge = false;
     }
 
     public Case getPosition() {
