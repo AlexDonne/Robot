@@ -83,8 +83,7 @@ public class LecteurDonnees {
             int nbLignes = scanner.nextInt();
             int nbColonnes = scanner.nextInt();
             int tailleCases = scanner.nextInt();    // en m
-
-            Carte carte = new Carte(nbLignes, nbColonnes, 50);
+            Carte carte = new Carte(nbLignes, nbColonnes, tailleCases);
             System.out.println("Carte " + nbLignes + "x" + nbColonnes
                     + "; taille des cases = " + tailleCases);
 

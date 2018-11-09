@@ -3,7 +3,11 @@ package Environnement;
 import Robots.AbstractRobot;
 
 public class Carte {
-    private double tailleCases;
+
+    /**
+     * Taille cases en m
+     */
+    private int tailleCases;
 
     private int nbLignes;
 
@@ -11,7 +15,7 @@ public class Carte {
 
     private Case[][] cases;
 
-    public Carte(int nbLignes, int nbColonnes, double tailleCases) {
+    public Carte(int nbLignes, int nbColonnes, int tailleCases) {
         this.nbColonnes = nbColonnes;
         this.nbLignes = nbLignes;
         this.tailleCases = tailleCases;
@@ -22,10 +26,6 @@ public class Carte {
         cases[ligne][colonne] = new Case(nature, ligne, colonne);
     }
 
-    public double getTailleCases() {
-        return tailleCases;
-    }
-
     public int getNbLignes() {
         return nbLignes;
     }
@@ -34,23 +34,27 @@ public class Carte {
         return nbColonnes;
     }
 
+    public int getTailleCases() {
+        return tailleCases;
+    }
+
     public Case getCase(int ligne, int colonne) {
         return cases[ligne][colonne];
     }
 
-    public boolean voisinExisteEau(Case src, Direction dir) {
+    private boolean voisinExisteEau(Case src, Direction dir) {
         switch (dir) {
             case NORD:
-                return src.getLigne() != 0 && this.getCase(src.getLigne()-1, src.getColonne()).getNatureTerrain().equals(NatureTerrain.EAU);
+                return src.getLigne() != 0 && this.getCase(src.getLigne() - 1, src.getColonne()).getNatureTerrain().equals(NatureTerrain.EAU);
 
             case EST:
-                return src.getColonne() != nbColonnes - 1 && this.getCase(src.getLigne(), src.getColonne()+1).getNatureTerrain().equals(NatureTerrain.EAU);
+                return src.getColonne() != nbColonnes - 1 && this.getCase(src.getLigne(), src.getColonne() + 1).getNatureTerrain().equals(NatureTerrain.EAU);
 
             case SUD:
-                return src.getLigne() != nbLignes - 1 && this.getCase(src.getLigne()+1, src.getColonne()).getNatureTerrain().equals(NatureTerrain.EAU);
+                return src.getLigne() != nbLignes - 1 && this.getCase(src.getLigne() + 1, src.getColonne()).getNatureTerrain().equals(NatureTerrain.EAU);
 
             case OUEST:
-                return src.getColonne() != 0 && this.getCase(src.getLigne(), src.getColonne()-1).getNatureTerrain().equals(NatureTerrain.EAU);
+                return src.getColonne() != 0 && this.getCase(src.getLigne(), src.getColonne() - 1).getNatureTerrain().equals(NatureTerrain.EAU);
 
             default:
                 throw new IllegalArgumentException("Direction n'existe pas");
@@ -62,20 +66,22 @@ public class Carte {
         Graphe graphe = new Graphe(this.nbLignes * this.nbColonnes);
         for (int i = 0; i < nbLignes; i++) {
             for (int j = 1; j < nbColonnes; j++) {
-                if (robot.getType().getDeplacements().contains(this.cases[i][j-1].getNatureTerrain()) && robot.getType().getDeplacements().contains(this.cases[i][j].getNatureTerrain())) {
+                if (robot.getType().getDeplacements().contains(this.cases[i][j - 1].getNatureTerrain()) && robot.getType().getDeplacements().contains(this.cases[i][j].getNatureTerrain())) {
                     double temps = 0;
-                    temps += this.tailleCases / robot.getVitesse(this.cases[i][j - 1].getNatureTerrain()) / 2;
-                    temps += this.tailleCases / robot.getVitesse(this.cases[i][j].getNatureTerrain()) / 2;
+                    temps += this.tailleCases / 1000 / robot.getVitesse(this.cases[i][j - 1].getNatureTerrain()) / 2;
+                    temps += this.tailleCases / 1000 /robot.getVitesse(this.cases[i][j].getNatureTerrain()) / 2;
+                    temps *= 60;
                     graphe.ajouterArc(i * nbColonnes + j - 1, i * nbColonnes + j, temps);
                 }
             }
         }
         for (int j = 0; j < nbColonnes; j++) {
             for (int i = 1; i < nbLignes; i++) {
-                if (robot.getType().getDeplacements().contains(this.cases[i-1][j].getNatureTerrain()) && robot.getType().getDeplacements().contains(this.cases[i][j].getNatureTerrain())) {
+                if (robot.getType().getDeplacements().contains(this.cases[i - 1][j].getNatureTerrain()) && robot.getType().getDeplacements().contains(this.cases[i][j].getNatureTerrain())) {
                     double temps = 0;
-                    temps += this.tailleCases / robot.getVitesse(this.cases[i-1][j].getNatureTerrain()) / 2;
-                    temps += this.tailleCases / robot.getVitesse(this.cases[i][j].getNatureTerrain()) / 2 / 2;
+                    temps += this.tailleCases / 1000 / robot.getVitesse(this.cases[i - 1][j].getNatureTerrain()) / 2;
+                    temps += this.tailleCases / 1000 / robot.getVitesse(this.cases[i][j].getNatureTerrain()) / 2;
+                    temps *= 60;
                     graphe.ajouterArc((i - 1) * nbColonnes + j, i * nbColonnes + j, temps);
                 }
             }
@@ -83,7 +89,7 @@ public class Carte {
         return graphe;
     }
 
-    public boolean eauAdjacente(Case position){
+    boolean eauAdjacente(Case position) {
         return this.voisinExisteEau(position, Direction.NORD)
                 || this.voisinExisteEau(position, Direction.EST)
                 || this.voisinExisteEau(position, Direction.OUEST)

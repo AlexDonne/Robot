@@ -76,7 +76,6 @@ public abstract class AbstractRobot {
         Itineraire itineraire;
 
 
-
         try {
             itineraire = graphe.dijkstra(this.position, incendie.getPosition(), carte);
 
@@ -117,10 +116,10 @@ public abstract class AbstractRobot {
 
         this.setOccupe(true); // le robot n'est plus libre;
         if (taille == 0) { // le robot est déjà sur place
-            EvenementFinRechargementRobot e = new EvenementFinRechargementRobot(t + 3, this); // tous les robots mettent 3 pour se remplir (le niveau d'eau du robot est actualisé lors de l'éxécution de cet évènement ainsi que sa liberté)
+            EvenementFinRechargementRobot e = new EvenementFinRechargementRobot(t + this.getType().getTempsRechargement(), this); // tous les robots mettent 3 pour se remplir (le niveau d'eau du robot est actualisé lors de l'éxécution de cet évènement ainsi que sa liberté)
             simulateur.ajouteEvenement(e);
         } else {
-            EvenementFinRechargementRobot e = new EvenementFinRechargementRobot(3 + t + Math.round(iti.getMapItineraire().get(0).getTemps()), this); // tous les robots mettent 3 pour se remplir (le niveau d'eau du robot est actualisé los de l'éxécution de cet évènement)
+            EvenementFinRechargementRobot e = new EvenementFinRechargementRobot(this.getType().getTempsRechargement() + t + Math.round(iti.getMapItineraire().get(0).getTemps()), this); // tous les robots mettent 3 pour se remplir (le niveau d'eau du robot est actualisé los de l'éxécution de cet évènement)
             simulateur.ajouteEvenement(e);
         }
     }

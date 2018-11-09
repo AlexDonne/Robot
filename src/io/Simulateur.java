@@ -8,8 +8,10 @@ import gui.Rectangle;
 
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.zip.DataFormatException;
 
 
@@ -61,13 +63,12 @@ public class Simulateur implements Simulable {
     }
 
     private void execute() {
-        int i = 0;
-        while (i < this.listeEvenements.size() && this.listeEvenements.get(i).getDate() <= this.dateSimulation) {
-            if (this.listeEvenements.get(i).getDate() == this.dateSimulation) {
-                this.listeEvenements.get(i).execute();
-            }
-            i++;
+        while (!this.listeEvenements.isEmpty() && this.listeEvenements.get(0).getDate() <= this.dateSimulation) {
+            this.listeEvenements.get(0).execute();
+            this.listeEvenements.remove(0);
         }
+
+        this.donneesSimulation.getIncendies().removeIf(incendie -> incendie.getEauNecessaire() == 0);
     }
 
 
@@ -76,24 +77,56 @@ public class Simulateur implements Simulable {
         for (int i = 0; i < this.donneesSimulation.getCarte().getNbLignes(); i++) {
             for (int j = 0; j < this.donneesSimulation.getCarte().getNbColonnes(); j++) {
                 Color color = this.donneesSimulation.getCarte().getCase(i, j).getNatureTerrain().getColor();
-                guiSimulator.addGraphicalElement(new Rectangle(j * 100 + 50, i * 100 + 50, Color.white, color, 100));
+                guiSimulator.addGraphicalElement(
+                        new Rectangle(
+                                j * 100 + 50,
+                                i * 100 + 50,
+                                Color.white,
+                                color,
+                                100
+                        )
+                );
             }
         }
         for (Incendie incendie : this.donneesSimulation.getIncendies()) {
             guiSimulator.addGraphicalElement(
-                    new ImageElement(incendie.getPosition().getColonne() * 100 + 15, incendie.getPosition().getLigne() * 100 + 15, "images/flammes.png", 80, 80, null)
+                    new ImageElement(
+                            incendie.getPosition().getColonne() * 100 + 15,
+                            incendie.getPosition().getLigne() * 100 + 15,
+                            "images/flammes.png",
+                            80,
+                            80,
+                            null
+                    )
             );
             guiSimulator.addGraphicalElement(
-                    new Text(incendie.getPosition().getColonne() * 100 + 50, incendie.getPosition().getLigne() * 100 + 10, Color.RED, Integer.toString(incendie.getEauNecessaire()))
+                    new Text(
+                            incendie.getPosition().getColonne() * 100 + 50,
+                            incendie.getPosition().getLigne() * 100 + 10,
+                            Color.RED,
+                            Integer.toString(incendie.getEauNecessaire())
+                    )
             );
         }
 
         for (AbstractRobot robot : this.donneesSimulation.getRobots()) {
             guiSimulator.addGraphicalElement(
-                    new ImageElement(robot.getPosition().getColonne() * 100 + 20, robot.getPosition().getLigne() *100 + 20, robot.getType().getUrl(), 60, 60, null)
+                    new ImageElement(
+                            robot.getPosition().getColonne() * 100 + 20,
+                            robot.getPosition().getLigne() * 100 + 20,
+                            robot.getType().getUrl(),
+                            60,
+                            60,
+                            null
+                    )
             );
             guiSimulator.addGraphicalElement(
-                    new Text(robot.getPosition().getColonne() * 100 + 50, robot.getPosition().getLigne() * 100 + 90, Color.BLACK, Integer.toString(robot.getReservoir()))
+                    new Text(
+                            robot.getPosition().getColonne() * 100 + 50,
+                            robot.getPosition().getLigne() * 100 + 90,
+                            Color.BLACK,
+                            Integer.toString(robot.getReservoir())
+                    )
             );
         }
 

@@ -15,7 +15,8 @@ public enum TypesRobot {
                     Environnement.NatureTerrain.TERRAIN_LIBRE
             )
     ),
-            new String("images/drone.png")
+            new String("images/drone.png"),
+            30
     ),
     PATTES(new ArrayList<Environnement.NatureTerrain>(
             Arrays.asList(
@@ -25,14 +26,16 @@ public enum TypesRobot {
                     Environnement.NatureTerrain.TERRAIN_LIBRE
             )
     ),
-            new String("images/pattes.png")
+            new String("images/pattes.png"),
+            -1
     ),
     ROUES(new ArrayList<Environnement.NatureTerrain>(
             Arrays.asList(Environnement.NatureTerrain.HABITAT,
                     Environnement.NatureTerrain.TERRAIN_LIBRE
             )
     ),
-            new String("images/roues.png")
+            new String("images/roues.png"),
+            10
     ),
     CHENILLES(new ArrayList<Environnement.NatureTerrain>(
             Arrays.asList(
@@ -41,14 +44,23 @@ public enum TypesRobot {
                     Environnement.NatureTerrain.TERRAIN_LIBRE
             )
     ),
-            new String("images/chenilles.png")
+            new String("images/chenilles.png"),
+            5
     );
 
     private List<Environnement.NatureTerrain> deplacements;
+
     private String url;
-    TypesRobot(List<Environnement.NatureTerrain> deplacements, String url) {
+
+    /**
+     * Temps pour se recharger, en minutes
+     */
+    private int tempsRechargement;
+
+    TypesRobot(List<Environnement.NatureTerrain> deplacements, String url, int tempsRechargement) {
         this.deplacements = deplacements;
         this.url = url;
+        this.tempsRechargement = tempsRechargement;
     }
 
     public List<Environnement.NatureTerrain> getDeplacements() {
@@ -57,5 +69,9 @@ public enum TypesRobot {
 
     public String getUrl() {
         return url;
+    }
+
+    public int getTempsRechargement() {
+        return tempsRechargement;
     }
 }
