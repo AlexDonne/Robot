@@ -77,7 +77,7 @@ public class Simulateur implements Simulable {
         while (!this.listeEvenements.isEmpty() && this.listeEvenements.peek().getDate() <= this.dateSimulation) {
             this.listeEvenements.poll().execute();
         }
-        this.donneesSimulation.getIncendies().removeIf(incendie -> incendie.estEteint());
+        //this.donneesSimulation.getIncendies().removeIf(incendie -> incendie.estEteint());
     }
 
 
@@ -101,6 +101,19 @@ public class Simulateur implements Simulable {
             }
         }
         for (Incendie incendie : this.donneesSimulation.getIncendies()) {
+            if (incendie.estEteint()) {
+              guiSimulator.addGraphicalElement(
+                      new ImageElement(
+                              incendie.getPosition().getColonne() * 100 + 15,
+                              incendie.getPosition().getLigne() * 100 + 15,
+                              "images/smoke.png",
+                              80,
+                              80,
+                              null
+                      )
+              );
+            }
+            else {
             guiSimulator.addGraphicalElement(
                     new ImageElement(
                             incendie.getPosition().getColonne() * 100 + 15,
@@ -119,6 +132,7 @@ public class Simulateur implements Simulable {
                             Integer.toString(incendie.getEauNecessaire())
                     )
             );
+          }
         }
 
         for (AbstractRobot robot : this.donneesSimulation.getRobots()) {
