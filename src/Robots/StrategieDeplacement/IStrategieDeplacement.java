@@ -4,6 +4,7 @@ import Environnement.Carte;
 import Environnement.Case;
 import Environnement.Itineraire;
 import Robots.AbstractRobot;
+import Exception.CheminNonExistantException;
 
 /**
  * Interface pour les strategies de déplacements possibles pour un robot
@@ -18,7 +19,7 @@ public interface IStrategieDeplacement {
      * @return
      * @throws Exception
      */
-    Itineraire creerItineraire(AbstractRobot robot, Case arrivee, Carte carte) throws Exception;
+    Itineraire creerItineraire(AbstractRobot robot, Case arrivee, Carte carte) throws CheminNonExistantException;
 
     /**
      * Créer un itinéraire jusqu'à la case eau la plus proche
@@ -28,5 +29,5 @@ public interface IStrategieDeplacement {
      * @return
      * @throws Exception
      */
-    Itineraire creerItineraireEau(AbstractRobot robot, Carte carte) throws Exception;
+    Itineraire creerItineraireEau(AbstractRobot robot, Carte carte) throws CheminNonExistantException;
 }

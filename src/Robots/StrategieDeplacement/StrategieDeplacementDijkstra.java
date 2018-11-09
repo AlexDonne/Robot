@@ -4,6 +4,7 @@ import Environnement.Carte;
 import Environnement.Case;
 import Environnement.Itineraire;
 import Robots.AbstractRobot;
+import Exception.CheminNonExistantException;
 
 /**
  * Itineraire créé grâce à l'algorithme de dijkstra
@@ -11,13 +12,13 @@ import Robots.AbstractRobot;
 public class StrategieDeplacementDijkstra implements IStrategieDeplacement {
 
     @Override
-    public Itineraire creerItineraire(AbstractRobot robot, Case arrivee, Carte carte) throws Exception {
+    public Itineraire creerItineraire(AbstractRobot robot, Case arrivee, Carte carte) throws CheminNonExistantException {
         Graphe graphe = Graphe.creerGraphe(carte, robot);
         return graphe.dijkstra(robot.getPosition(), arrivee, carte);
     }
 
     @Override
-    public Itineraire creerItineraireEau(AbstractRobot robot, Carte carte) throws Exception {
+    public Itineraire creerItineraireEau(AbstractRobot robot, Carte carte) throws CheminNonExistantException {
         Graphe graphe = Graphe.creerGraphe(carte, robot);
         return graphe.dijkstraEau(robot.getPosition(), carte, robot);
     }

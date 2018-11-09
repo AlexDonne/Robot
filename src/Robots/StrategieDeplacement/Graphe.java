@@ -3,6 +3,7 @@ package Robots.StrategieDeplacement;
 import Environnement.*;
 import Robots.AbstractRobot;
 import Robots.TypesRobot;
+import Exception.CheminNonExistantException;
 
 import java.util.*;
 
@@ -69,13 +70,13 @@ public class Graphe {
         this.matriceAdjacence[j][i] = val;
     }
 
-    private static int marquerSommetSuivant(int[] sommetPrec, double[] distance, boolean[] estMarque, int n) throws Exception {
+    private static int marquerSommetSuivant(int[] sommetPrec, double[] distance, boolean[] estMarque, int n) throws CheminNonExistantException {
         int i = 0;
         while ((i < n) && (estMarque[i] || distance[i] < 0)) {
             i++;
         }
         if (i == n) {
-            throw new Exception("Plus de sommet à marquer. Le chemin n'existe pas !");
+            throw new CheminNonExistantException("Plus de sommet à marquer. Le chemin n'existe pas !");
         }
         int k = i;
         double distMin = distance[i];
@@ -117,7 +118,7 @@ public class Graphe {
      * @return
      * @throws Exception
      */
-    public Itineraire dijkstra(Case depart, Case arrivee, Carte carte) throws Exception {
+    public Itineraire dijkstra(Case depart, Case arrivee, Carte carte) throws CheminNonExistantException {
         int a = depart.getLigne() * carte.getNbColonnes() + depart.getColonne();
         int b = arrivee.getLigne() * carte.getNbColonnes() + arrivee.getColonne();
         int[] sommetPrec = new int[this.nombreSommets]; // donne pour chaque sommet le sommet par lequel il est atteint
@@ -166,7 +167,7 @@ public class Graphe {
      * @return
      * @throws Exception
      */
-    public Itineraire dijkstraEau(Case depart, Carte carte, AbstractRobot robot) throws Exception { // donne l'itinéraire pour aller à la case adjacente à de l'eau la plus proche
+    public Itineraire dijkstraEau(Case depart, Carte carte, AbstractRobot robot) throws CheminNonExistantException { // donne l'itinéraire pour aller à la case adjacente à de l'eau la plus proche
         int a = depart.getLigne() * carte.getNbColonnes() + depart.getColonne();
         int[] sommetPrec = new int[this.nombreSommets]; // donne pour chaque sommet le sommet par lequel il est atteint
         double[] distance = new double[this.nombreSommets]; // donne pour chaque sommet sa distance au sommet a
