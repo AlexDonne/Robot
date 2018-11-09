@@ -7,7 +7,7 @@ import io.Simulateur;
 
 import java.util.List;
 
-public class StrategieSimple implements IStrategie {
+public class StrategieGlobaleSimple implements IStrategieGlobale {
 
     @Override
     public void prendreDecisions(Simulateur simulateur, List<Incendie> incendies, List<AbstractRobot> robots, Carte carte) {

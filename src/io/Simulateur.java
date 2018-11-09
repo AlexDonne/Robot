@@ -1,19 +1,17 @@
 package io;
 
 import Decision.ChefPompier;
-import Decision.IStrategie;
+import Decision.IStrategieGlobale;
 import Environnement.Incendie;
 import Evenements.Evenement;
 import Robots.AbstractRobot;
+import Robots.StrategieDeplacement.IStrategieDeplacement;
 import gui.*;
 import gui.Rectangle;
 
 import java.awt.*;
 import java.io.FileNotFoundException;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.function.Predicate;
+import java.util.*;
 import java.util.zip.DataFormatException;
 
 
@@ -22,7 +20,7 @@ public class Simulateur implements Simulable {
     /**
      * Liste des événements
      */
-    private List<Evenement> listeEvenements;
+    private Queue<Evenement> listeEvenements;
 
     private GUISimulator guiSimulator;
 
@@ -36,18 +34,23 @@ public class Simulateur implements Simulable {
      */
     private String fichier;
 
+    private IStrategieDeplacement strategieDeplacement;
+
     /**
-     *
      * @param dateSimulation
      * @param fichier
-     * @param strategie, la stratégie que va adopter le chef pompier
+     * @param strategie,     la stratégie que va adopter le chef pompier
      */
-    public Simulateur(long dateSimulation, String fichier, IStrategie strategie) {
+    public Simulateur(long dateSimulation, String fichier, IStrategieGlobale strategie, IStrategieDeplacement strategieDeplacement) {
         this.fichier = fichier;
         this.dateSimulation = dateSimulation;
-        this.listeEvenements = new LinkedList<>();
+        this.strategieDeplacement = strategieDeplacement;
+
+        Comparator<Evenement> evenementComparator = Comparator.comparingDouble(Evenement::getDate);
+        this.listeEvenements = new PriorityQueue<>(evenementComparator);
+
         try {
-            this.donneesSimulation = LecteurDonnees.lire(fichier);
+            this.donneesSimulation = LecteurDonnees.lire(fichier, strategieDeplacement);
         } catch (FileNotFoundException e) {
             System.out.println("File " + fichier + " not found");
         } catch (DataFormatException e) {
@@ -67,14 +70,12 @@ public class Simulateur implements Simulable {
     }
 
 
-
     /**
      * Execute tous les evenements dont la date est inférieur à la dete de simulation, les supprime ensuite de la liste (pour ne pas les réexecuter)
      */
     private void execute() {
-        while (!this.listeEvenements.isEmpty() && this.listeEvenements.get(0).getDate() <= this.dateSimulation) {
-            this.listeEvenements.get(0).execute();
-            this.listeEvenements.remove(0);
+        while (!this.listeEvenements.isEmpty() && this.listeEvenements.peek().getDate() <= this.dateSimulation) {
+            this.listeEvenements.poll().execute();
         }
         this.donneesSimulation.getIncendies().removeIf(incendie -> incendie.estEteint());
     }
@@ -157,7 +158,7 @@ public class Simulateur implements Simulable {
         this.dateSimulation = 0;
         this.listeEvenements.clear();
         try {
-            this.donneesSimulation = LecteurDonnees.lire(fichier);
+            this.donneesSimulation = LecteurDonnees.lire(fichier, this.strategieDeplacement);
         } catch (FileNotFoundException e) {
             System.out.println("File " + fichier + " not found");
         } catch (DataFormatException e) {
@@ -167,17 +168,18 @@ public class Simulateur implements Simulable {
         draw();
     }
 
-    private void incrementeDate(int t) {
-        this.dateSimulation += t;
+    /**
+     * Incrément la date de la simulation
+     *
+     * @param temps
+     */
+    private void incrementeDate(int temps) {
+        this.dateSimulation += temps;
     }
 
 
     public void ajouteEvenement(Evenement e) {
-        int i = 0;
-        while (i < this.listeEvenements.size() && e.getDate() > this.listeEvenements.get(i).getDate()) {
-            i++;
-        }
-        this.listeEvenements.add(i, e);
+        this.listeEvenements.add(e);
     }
 
     public long getDateSimulation() {

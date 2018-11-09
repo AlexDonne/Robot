@@ -1,5 +1,6 @@
 package test;
 
+import Robots.StrategieDeplacement.StrategieDeplacementDijkstra;
 import io.LecteurDonnees;
 
 import java.io.FileNotFoundException;
@@ -14,7 +15,7 @@ public class TestLecteurDonnees {
         }
 
         try {
-            LecteurDonnees.lire(args[0]);
+            LecteurDonnees.lire(args[0], new StrategieDeplacementDijkstra());
         } catch (FileNotFoundException e) {
             System.out.println("fichier " + args[0] + " inconnu ou illisible");
         } catch (DataFormatException e) {

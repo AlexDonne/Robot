@@ -2,10 +2,12 @@ package Robots;
 
 import Environnement.Case;
 import Environnement.NatureTerrain;
+import Robots.StrategieDeplacement.IStrategieDeplacement;
 
 public class RobotPattes extends AbstractRobot {
-    public RobotPattes(Case position) {
-        super(position);
+
+    public RobotPattes(Case position, IStrategieDeplacement strategieDeplacement) {
+        super(position, strategieDeplacement);
         this.reservoir = -1; //Infini
         this.vitesse = 30000;
     }
@@ -15,9 +17,12 @@ public class RobotPattes extends AbstractRobot {
 
     }
 
+    /**
+     * Volume ne diminue pas
+     * @param vol, le volume déversé
+     */
     @Override
-    public double deverserEauSurIncendie(int vol) {
-        return this.getTempsOperation(vol);
+    public void deverserEauSurIncendie(int vol) {
     }
 
     @Override

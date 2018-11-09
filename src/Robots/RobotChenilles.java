@@ -2,10 +2,12 @@ package Robots;
 
 import Environnement.Case;
 import Environnement.NatureTerrain;
+import Robots.StrategieDeplacement.IStrategieDeplacement;
 
 public class RobotChenilles extends AbstractRobot {
-    public RobotChenilles(Case position) {
-        super(position);
+
+    public RobotChenilles(Case position, IStrategieDeplacement strategieDeplacement) {
+        super(position, strategieDeplacement);
         this.reservoir = 2000;
         this.vitesse = 60000;
     }

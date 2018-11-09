@@ -1,11 +1,12 @@
 package Robots;
 
 import Environnement.Case;
+import Robots.StrategieDeplacement.IStrategieDeplacement;
 
 public class RobotAerien extends AbstractRobot{
 
-    public RobotAerien(Case position){
-        super(position);
+    public RobotAerien(Case position, IStrategieDeplacement strategieDeplacement){
+        super(position, strategieDeplacement);
         this.reservoir = 10000;
         this.vitesse = 100000;
     }

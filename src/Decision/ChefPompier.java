@@ -13,9 +13,9 @@ public class ChefPompier {
     /**
      * La stratégie adoptée
      */
-    private IStrategie strategie;
+    private IStrategieGlobale strategie;
 
-    public ChefPompier(DonneesSimulation donneesSimulation, IStrategie strategie) {
+    public ChefPompier(DonneesSimulation donneesSimulation, IStrategieGlobale strategie) {
         this.donneesSimulation = donneesSimulation;
         this.strategie = strategie;
     }

@@ -34,6 +34,10 @@ public class Carte {
         return nbColonnes;
     }
 
+    public int getTailleCases() {
+        return tailleCases;
+    }
+
     public Case getCase(int ligne, int colonne) {
         return cases[ligne][colonne];
     }
@@ -62,39 +66,6 @@ public class Carte {
             default:
                 throw new IllegalArgumentException("Direction n'existe pas");
         }
-    }
-
-    /**
-     * Pour un robot donné, transforme la carte en objet graphe
-     *
-     * @param robot
-     * @return
-     */
-    public Graphe toGraphe(AbstractRobot robot) {
-        Graphe graphe = new Graphe(this.nbLignes * this.nbColonnes);
-        for (int i = 0; i < nbLignes; i++) {
-            for (int j = 1; j < nbColonnes; j++) {
-                if (robot.getType().getDeplacements().contains(this.cases[i][j - 1].getNatureTerrain()) && robot.getType().getDeplacements().contains(this.cases[i][j].getNatureTerrain())) {
-                    double temps = 0;
-                    temps += ((float) this.tailleCases) / robot.getVitesse(this.cases[i][j - 1].getNatureTerrain()) / 2;
-                    temps += ((float) this.tailleCases) / robot.getVitesse(this.cases[i][j].getNatureTerrain()) / 2;
-                    temps *= 3600; //Pour convertir en secondes
-                    graphe.ajouterArc(i * nbColonnes + j - 1, i * nbColonnes + j, temps);
-                }
-            }
-        }
-        for (int j = 0; j < nbColonnes; j++) {
-            for (int i = 1; i < nbLignes; i++) {
-                if (robot.getType().getDeplacements().contains(this.cases[i - 1][j].getNatureTerrain()) && robot.getType().getDeplacements().contains(this.cases[i][j].getNatureTerrain())) {
-                    double temps = 0;
-                    temps += ((float) this.tailleCases) / robot.getVitesse(this.cases[i - 1][j].getNatureTerrain()) / 2;
-                    temps += ((float) this.tailleCases) / robot.getVitesse(this.cases[i][j].getNatureTerrain()) / 2;
-                    temps *= 3600; //Pour convertir en secondes
-                    graphe.ajouterArc((i - 1) * nbColonnes + j, i * nbColonnes + j, temps);
-                }
-            }
-        }
-        return graphe;
     }
 
     /**

@@ -15,10 +15,16 @@ public class EvenementDeverserEauSurIncendie extends Evenement {
      */
     private AbstractRobot robot;
 
-    public EvenementDeverserEauSurIncendie(long date, Incendie incendie, AbstractRobot robot) {
+    /**
+     * Volume d'eau qui va être déversé sur l'incendie
+     */
+    private int volume;
+
+    public EvenementDeverserEauSurIncendie(long date, Incendie incendie, AbstractRobot robot, int volume) {
         super(date);
         this.incendie = incendie;
         this.robot = robot;
+        this.volume = volume;
     }
 
     /**
@@ -26,19 +32,15 @@ public class EvenementDeverserEauSurIncendie extends Evenement {
      */
     @Override
     public void execute() {
-        int vol;
         if ((incendie.getEauNecessaire() <= robot.getReservoir()) || robot.getReservoir() == -1) {
-            vol = incendie.getEauNecessaire();
             incendie.setEauNecessaire(0);
         } else {
-            vol = robot.getReservoir();
             incendie.setEauNecessaire(incendie.getEauNecessaire() - robot.getReservoir());
             incendie.setPrisEnCharge(false);
         }
-        double temps = this.robot.deverserEauSurIncendie(vol);
-        this.date += temps;
+        this.robot.deverserEauSurIncendie(this.volume);
         this.robot.setOccupe(false);
-        System.out.println(vol + " déversé sur incendie en case " + incendie.getPosition().getLigne() + "-" + incendie.getPosition().getColonne());
+        System.out.println(this.volume + " déversé sur incendie en case " + incendie.getPosition().getLigne() + "-" + incendie.getPosition().getColonne());
         System.out.println("Reste à déverser " + incendie.getEauNecessaire());
     }
 }

@@ -9,6 +9,8 @@ import java.io.*;
 import java.util.*;
 import java.util.zip.DataFormatException;
 
+import Robots.StrategieDeplacement.IStrategieDeplacement;
+import Robots.StrategieDeplacement.StrategieDeplacementDijkstra;
 import Robots.TypesRobot;
 
 
@@ -44,12 +46,11 @@ public class LecteurDonnees {
      * @param fichierDonnees nom du fichier à lire
      * @return donneesSimulation
      */
-    public static DonneesSimulation lire(String fichierDonnees)
+    public static DonneesSimulation lire(String fichierDonnees, IStrategieDeplacement strategieDeplacement)
             throws FileNotFoundException, DataFormatException {
         System.out.println("\n == Lecture du fichier" + fichierDonnees);
         LecteurDonnees lecteur = new LecteurDonnees(fichierDonnees);
-
-        DonneesSimulation donneesSimulation = new DonneesSimulation(lecteur.lireCarte(), lecteur.lireIncendies(), lecteur.lireRobots());
+        DonneesSimulation donneesSimulation = new DonneesSimulation(lecteur.lireCarte(), lecteur.lireIncendies(), lecteur.lireRobots(strategieDeplacement));
         scanner.close();
         System.out.println("\n == Lecture terminee");
 
@@ -187,14 +188,14 @@ public class LecteurDonnees {
     /**
      * Lit et affiche les donnees des robots.
      */
-    private List<AbstractRobot> lireRobots() throws DataFormatException {
+    private List<AbstractRobot> lireRobots(IStrategieDeplacement strategieDeplacement) throws DataFormatException {
         ignorerCommentaires();
         List<AbstractRobot> robots = new ArrayList<>();
         try {
             int nbRobots = scanner.nextInt();
             System.out.println("Nb de robots = " + nbRobots);
             for (int i = 0; i < nbRobots; i++) {
-                robots.add(lireRobot(i));
+                robots.add(lireRobot(i, strategieDeplacement));
             }
 
             return robots;
@@ -211,7 +212,7 @@ public class LecteurDonnees {
      *
      * @param i
      */
-    private AbstractRobot lireRobot(int i) throws DataFormatException {
+    private AbstractRobot lireRobot(int i, IStrategieDeplacement strategieDeplacement) throws DataFormatException {
         ignorerCommentaires();
         System.out.print("Robot " + i + ": ");
 
@@ -243,17 +244,17 @@ public class LecteurDonnees {
             AbstractRobot robot;
             switch (typeRobot) {
                 case ROUES:
-                    robot = new RobotRoues(this.carte.getCase(lig, col));
+                    robot = new RobotRoues(this.carte.getCase(lig, col), strategieDeplacement);
                     break;
 
                 case DRONE:
-                    robot = new RobotAerien(this.carte.getCase(lig, col));
+                    robot = new RobotAerien(this.carte.getCase(lig, col), strategieDeplacement);
                     break;
                 case CHENILLES:
-                    robot = new RobotChenilles(this.carte.getCase(lig, col));
+                    robot = new RobotChenilles(this.carte.getCase(lig, col), strategieDeplacement);
                     break;
                 case PATTES:
-                    robot = new RobotPattes(this.carte.getCase(lig, col));
+                    robot = new RobotPattes(this.carte.getCase(lig, col), strategieDeplacement);
                     break;
                 default:
                     throw new DataFormatException("Type non connu");

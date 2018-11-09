@@ -6,11 +6,11 @@ import Robots.TypesRobot;
 import java.util.*;
 
 public class Graphe {
-    private int n; //nombre de sommets
+    private int nombreSommets; //nombre de sommets
     private double[][] matriceAdjacence;
 
-    public Graphe(int n) {
-        this.n = n;
+    private Graphe(int n) {
+        this.nombreSommets = n;
         this.matriceAdjacence = new double[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -24,7 +24,41 @@ public class Graphe {
     }
 
     /**
+     * Pour un robot donné, transforme la carte en objet graphe
+     *
+     * @param robot
+     * @return
+     */
+    public static Graphe creerGraphe(Carte carte, AbstractRobot robot) {
+        Graphe graphe = new Graphe(carte.getNbLignes() * carte.getNbColonnes());
+        for (int i = 0; i < carte.getNbLignes(); i++) {
+            for (int j = 1; j < carte.getNbColonnes(); j++) {
+                if (robot.getType().getDeplacements().contains(carte.getCase(i,j - 1).getNatureTerrain()) && robot.getType().getDeplacements().contains(carte.getCase(i,j).getNatureTerrain())) {
+                    double temps = 0;
+                    temps += ((float) carte.getTailleCases()) / robot.getVitesse(carte.getCase(i,j - 1).getNatureTerrain()) / 2;
+                    temps += ((float) carte.getTailleCases()) / robot.getVitesse(carte.getCase(i,j).getNatureTerrain()) / 2;
+                    temps *= 3600; //Pour convertir en secondes
+                    graphe.ajouterArc(i * carte.getNbColonnes() + j - 1, i * carte.getNbColonnes() + j, temps);
+                }
+            }
+        }
+        for (int j = 0; j < carte.getNbColonnes(); j++) {
+            for (int i = 1; i < carte.getNbLignes(); i++) {
+                if (robot.getType().getDeplacements().contains(carte.getCase(i-1,j).getNatureTerrain()) && robot.getType().getDeplacements().contains(carte.getCase(i,j).getNatureTerrain())) {
+                    double temps = 0;
+                    temps += ((float) carte.getTailleCases()) / robot.getVitesse(carte.getCase(i-1,j).getNatureTerrain()) / 2;
+                    temps += ((float) carte.getTailleCases()) / robot.getVitesse(carte.getCase(i,j).getNatureTerrain()) / 2;
+                    temps *= 3600; //Pour convertir en secondes
+                    graphe.ajouterArc((i - 1) * carte.getNbColonnes() + j, i * carte.getNbColonnes() + j, temps);
+                }
+            }
+        }
+        return graphe;
+    }
+
+    /**
      * ajoute l'arc entre les sommets i et j au graphe
+     *
      * @param i
      * @param j
      * @param val
@@ -55,7 +89,7 @@ public class Graphe {
     }
 
     private void mise_a_jour(int[] sommetPrec, double[] distance, boolean[] estMarque, double val, int sommet) {
-        for (int j = 0; j < this.n; j++) {
+        for (int j = 0; j < this.nombreSommets; j++) {
             if (!estMarque[j]) {
                 double val1 = this.matriceAdjacence[sommet][j];
                 if (val1 >= 0) {
@@ -75,6 +109,7 @@ public class Graphe {
 
     /**
      * Retourne le plus court itinéraire entre 2 cases
+     *
      * @param depart
      * @param arrivee
      * @param carte
@@ -84,12 +119,12 @@ public class Graphe {
     public Itineraire dijkstra(Case depart, Case arrivee, Carte carte) throws Exception {
         int a = depart.getLigne() * carte.getNbColonnes() + depart.getColonne();
         int b = arrivee.getLigne() * carte.getNbColonnes() + arrivee.getColonne();
-        int[] sommetPrec = new int[this.n]; // donne pour chaque sommet le sommet par lequel il est atteint
-        double[] distance = new double[this.n]; // donne pour chaque sommet sa distance au sommet a
-        boolean[] estMarque = new boolean[this.n]; // indique pour chaque sommet si le sommet est marque
+        int[] sommetPrec = new int[this.nombreSommets]; // donne pour chaque sommet le sommet par lequel il est atteint
+        double[] distance = new double[this.nombreSommets]; // donne pour chaque sommet sa distance au sommet a
+        boolean[] estMarque = new boolean[this.nombreSommets]; // indique pour chaque sommet si le sommet est marque
 
         // initialisation
-        for (int i = 0; i < this.n; i++) {
+        for (int i = 0; i < this.nombreSommets; i++) {
             sommetPrec[i] = -1;
             distance[i] = -1;
             estMarque[i] = false;
@@ -104,7 +139,7 @@ public class Graphe {
 
         while (c != b) {
             this.mise_a_jour(sommetPrec, distance, estMarque, val, c);
-            c = Graphe.marquerSommetSuivant(sommetPrec, distance, estMarque, this.n);
+            c = Graphe.marquerSommetSuivant(sommetPrec, distance, estMarque, this.nombreSommets);
             val = distance[c];
         }
 
@@ -123,6 +158,7 @@ public class Graphe {
 
     /**
      * Retourne le plus court itineraire qui mène à une case d'eau
+     *
      * @param depart
      * @param carte
      * @param robot
@@ -131,12 +167,12 @@ public class Graphe {
      */
     public Itineraire dijkstraEau(Case depart, Carte carte, AbstractRobot robot) throws Exception { // donne l'itinéraire pour aller à la case adjacente à de l'eau la plus proche
         int a = depart.getLigne() * carte.getNbColonnes() + depart.getColonne();
-        int[] sommetPrec = new int[this.n]; // donne pour chaque sommet le sommet par lequel il est atteint
-        double[] distance = new double[this.n]; // donne pour chaque sommet sa distance au sommet a
-        boolean[] estMarque = new boolean[this.n]; // indique pour chaque sommet si le sommet est marque
+        int[] sommetPrec = new int[this.nombreSommets]; // donne pour chaque sommet le sommet par lequel il est atteint
+        double[] distance = new double[this.nombreSommets]; // donne pour chaque sommet sa distance au sommet a
+        boolean[] estMarque = new boolean[this.nombreSommets]; // indique pour chaque sommet si le sommet est marque
 
         // initialisation
-        for (int i = 0; i < this.n; i++) {
+        for (int i = 0; i < this.nombreSommets; i++) {
             sommetPrec[i] = -1;
             distance[i] = -1;
             estMarque[i] = false;
@@ -151,14 +187,14 @@ public class Graphe {
         if (robot.getType().equals(TypesRobot.DRONE)) {
             while (!inter.getNatureTerrain().equals(NatureTerrain.EAU)) {
                 this.mise_a_jour(sommetPrec, distance, estMarque, val, c);
-                c = Graphe.marquerSommetSuivant(sommetPrec, distance, estMarque, this.n);
+                c = Graphe.marquerSommetSuivant(sommetPrec, distance, estMarque, this.nombreSommets);
                 val = distance[c];
                 inter = carte.getCase(c / carte.getNbColonnes(), c % carte.getNbColonnes());
             }
         } else {
             while (!carte.eauAdjacente(inter)) {
                 this.mise_a_jour(sommetPrec, distance, estMarque, val, c);
-                c = Graphe.marquerSommetSuivant(sommetPrec, distance, estMarque, this.n);
+                c = Graphe.marquerSommetSuivant(sommetPrec, distance, estMarque, this.nombreSommets);
                 val = distance[c];
                 inter = carte.getCase(c / carte.getNbColonnes(), c % carte.getNbColonnes());
             }
