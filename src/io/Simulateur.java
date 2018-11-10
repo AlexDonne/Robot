@@ -37,6 +37,8 @@ public class Simulateur implements Simulable {
 
     private IStrategieDeplacement strategieDeplacement;
 
+    private float coeff;
+
     /**
      * @param dateSimulation
      * @param fichier
@@ -57,6 +59,7 @@ public class Simulateur implements Simulable {
         } catch (DataFormatException e) {
             System.out.println("Data not in good format");
         }
+        this.coeff = 10 / (float) this.donneesSimulation.getCarte().getNbLignes();
         this.guiSimulator = new GUISimulator(this.donneesSimulation.getCarte().getNbLignes() * 100, this.donneesSimulation.getCarte().getNbColonnes() * 100, Color.BLACK);
         guiSimulator.setSimulable(this);
         this.chefPompier = new ChefPompier(this.donneesSimulation, strategie);
@@ -213,11 +216,11 @@ public class Simulateur implements Simulable {
                 Color color = this.donneesSimulation.getCarte().getCase(i, j).getNatureTerrain().getColor();
                 guiSimulator.addGraphicalElement(
                         new Rectangle(
-                                j * 100 + 50,
-                                i * 100 + 50,
+                                Math.round(this.coeff * (j * 100 + 50)),
+                                Math.round(this.coeff * (i * 100 + 50)),
                                 Color.white,
                                 color,
-                                100
+                                Math.round(this.coeff * 100)
                         )
                 );
             }
@@ -226,11 +229,11 @@ public class Simulateur implements Simulable {
             if (incendie.estEteint()) {
               guiSimulator.addGraphicalElement(
                       new ImageElement(
-                              incendie.getPosition().getColonne() * 100 + 15,
-                              incendie.getPosition().getLigne() * 100 + 15,
+                              Math.round(this.coeff * (incendie.getPosition().getColonne() * 100 + 15)),
+                              Math.round(this.coeff * (incendie.getPosition().getLigne() * 100 + 15)),
                               "images/smoke.png",
-                              80,
-                              80,
+                              Math.round(this.coeff * 80),
+                              Math.round(this.coeff * 80),
                               null
                       )
               );
@@ -239,18 +242,18 @@ public class Simulateur implements Simulable {
             is_complete = false;
             guiSimulator.addGraphicalElement(
                     new ImageElement(
-                            incendie.getPosition().getColonne() * 100 + 15,
-                            incendie.getPosition().getLigne() * 100 + 15,
+                            Math.round(this.coeff * (incendie.getPosition().getColonne() * 100 + 15)),
+                            Math.round(this.coeff * (incendie.getPosition().getLigne() * 100 + 15)),
                             "images/flammes.png",
-                            80,
-                            80,
+                            Math.round(this.coeff * 80),
+                            Math.round(this.coeff * 80),
                             null
                     )
             );
             guiSimulator.addGraphicalElement(
                     new Text(
-                            incendie.getPosition().getColonne() * 100 + 50,
-                            incendie.getPosition().getLigne() * 100 + 10,
+                            Math.round(this.coeff * (incendie.getPosition().getColonne() * 100 + 50)),
+                            Math.round(this.coeff * (incendie.getPosition().getLigne() * 100 + 10)),
                             Color.WHITE,
                             Integer.toString(incendie.getEauNecessaire())
                     )
@@ -261,18 +264,18 @@ public class Simulateur implements Simulable {
         for (AbstractRobot robot : this.donneesSimulation.getRobots()) {
             guiSimulator.addGraphicalElement(
                     new ImageElement(
-                            robot.getPosition().getColonne() * 100 + 20,
-                            robot.getPosition().getLigne() * 100 + 20,
+                            Math.round(this.coeff * (robot.getPosition().getColonne() * 100 + 20)),
+                            Math.round(this.coeff * (robot.getPosition().getLigne() * 100 + 20)),
                             robot.getType().getUrl(),
-                            60,
-                            60,
+                            Math.round(this.coeff * 60),
+                            Math.round(this.coeff * 60),
                             null
                     )
             );
             guiSimulator.addGraphicalElement(
                     new Text(
-                            robot.getPosition().getColonne() * 100 + 50,
-                            robot.getPosition().getLigne() * 100 + 90,
+                            Math.round(this.coeff * (robot.getPosition().getColonne() * 100 + 50)),
+                            Math.round(this.coeff * (robot.getPosition().getLigne() * 100 + 90)),
                             Color.BLACK,
                             Integer.toString(robot.getReservoir())
                     )
@@ -284,11 +287,11 @@ public class Simulateur implements Simulable {
                   Color color = this.donneesSimulation.getCarte().getCase(i, j).getNatureTerrain().getColor();
                   guiSimulator.addGraphicalElement(
                           new Rectangle(
-                                  j * 100 + 50,
-                                  i * 100 + 50,
+                                  Math.round(this.coeff * (j * 100 + 50)),
+                                  Math.round(this.coeff * (i * 100 + 50)),
                                   Color.white,
                                   color,
-                                  100
+                                  Math.round(this.coeff * 100)
                           )
                   );
               }
@@ -297,11 +300,11 @@ public class Simulateur implements Simulable {
               if (incendie.estEteint()) {
                 guiSimulator.addGraphicalElement(
                         new ImageElement(
-                                incendie.getPosition().getColonne() * 100 + 15,
-                                incendie.getPosition().getLigne() * 100 + 15,
+                                Math.round(this.coeff * (incendie.getPosition().getColonne() * 100 + 15)),
+                                Math.round(this.coeff * (incendie.getPosition().getLigne() * 100 + 15)),
                                 "images/smoke.png",
-                                80,
-                                80,
+                                Math.round(this.coeff * 80),
+                                Math.round(this.coeff * 80),
                                 null
                         )
                 );
@@ -310,18 +313,18 @@ public class Simulateur implements Simulable {
               is_complete = false;
               guiSimulator.addGraphicalElement(
                       new ImageElement(
-                              incendie.getPosition().getColonne() * 100 + 15,
-                              incendie.getPosition().getLigne() * 100 + 15,
+                              Math.round(this.coeff * (incendie.getPosition().getColonne() * 100 + 15)),
+                              Math.round(this.coeff * (incendie.getPosition().getLigne() * 100 + 15)),
                               "images/flammes.png",
-                              80,
-                              80,
+                              Math.round(this.coeff * 80),
+                              Math.round(this.coeff * 80),
                               null
                       )
               );
               guiSimulator.addGraphicalElement(
                       new Text(
-                              incendie.getPosition().getColonne() * 100 + 50,
-                              incendie.getPosition().getLigne() * 100 + 10,
+                              Math.round(this.coeff * (incendie.getPosition().getColonne() * 100 + 50)),
+                              Math.round(this.coeff * (incendie.getPosition().getLigne() * 100 + 10)),
                               Color.WHITE,
                               Integer.toString(incendie.getEauNecessaire())
                       )
@@ -332,18 +335,18 @@ public class Simulateur implements Simulable {
           for (AbstractRobot robot : this.donneesSimulation.getRobots()) {
               guiSimulator.addGraphicalElement(
                       new ImageElement(
-                              robot.getPosition().getColonne() * 100 + 20,
-                              robot.getPosition().getLigne() * 100 + 20,
+                              Math.round(this.coeff * (robot.getPosition().getColonne() * 100 + 20)),
+                              Math.round(this.coeff * (robot.getPosition().getLigne() * 100 + 20)),
                               robot.getType().getUrl(),
-                              60,
-                              60,
+                              Math.round(this.coeff * 60),
+                              Math.round(this.coeff * 60),
                               null
                       )
               );
               guiSimulator.addGraphicalElement(
                       new Text(
-                              robot.getPosition().getColonne() * 100 + 50,
-                              robot.getPosition().getLigne() * 100 + 90,
+                              Math.round(this.coeff * (robot.getPosition().getColonne() * 100 + 50)),
+                              Math.round(this.coeff * (robot.getPosition().getLigne() * 100 + 90)),
                               Color.BLACK,
                               Integer.toString(robot.getReservoir())
                       )
