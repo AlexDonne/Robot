@@ -11,5 +11,5 @@ import java.util.List;
  * Interface à implémenter pour les différentes stratégies que peut adopter le chef pompier
  */
 public interface IStrategieGlobale {
-    void prendreDecisions(Simulateur simulateur, List<Incendie> incendie, List<AbstractRobot> robots, Carte carte);
+    void prendreDecisions(Simulateur simulateur, List<Incendie> incendies, List<AbstractRobot> robots, Carte carte);
 }

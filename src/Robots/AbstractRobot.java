@@ -6,6 +6,7 @@ import Evenements.EvenementDeverserEauSurIncendie;
 import Evenements.EvenementFinRechargementRobot;
 import Robots.StrategieDeplacement.IStrategieDeplacement;
 import io.Simulateur;
+import Exception.CheminNonExistantException;
 
 public abstract class AbstractRobot {
 
@@ -106,7 +107,7 @@ public abstract class AbstractRobot {
         Itineraire itineraire;
         try {
             itineraire = this.strategieDeplacement.creerItineraire(this, incendie.getPosition(), carte);
-        } catch (Exception e) {
+        } catch (CheminNonExistantException e) {
             return false;
         }
 
@@ -152,8 +153,7 @@ public abstract class AbstractRobot {
         Itineraire iti;
         try {
             iti = this.strategieDeplacement.creerItineraireEau(this, carte);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (CheminNonExistantException e) {
             return;
         }
         this.creerDeplacements(iti, simulateur);
@@ -172,6 +172,23 @@ public abstract class AbstractRobot {
                     this
             ); // tous les robots mettent 3 pour se remplir (le niveau d'eau du robot est actualisé los de l'éxécution de cet évènement)
             simulateur.ajouteEvenement(e);
+        }
+    }
+
+    /**
+     * Donne le temps de déplacement du robot pour arriver sur une case
+     *
+     * @param arrivee
+     * @param carte
+     * @return
+     * @throws Exception
+     */
+    public double tempsDeplacement(Case arrivee, Carte carte) {
+        try {
+            Itineraire itineraire = this.strategieDeplacement.creerItineraire(this, arrivee, carte);
+            return itineraire.getMapItineraire().isEmpty() ? 0 : itineraire.getMapItineraire().get(0).getTemps();
+        } catch (CheminNonExistantException e) {
+            return -1;
         }
     }
 }

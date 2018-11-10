@@ -7,6 +7,9 @@ import io.Simulateur;
 
 import java.util.List;
 
+/**
+ * Strategie simple
+ */
 public class StrategieGlobaleSimple implements IStrategieGlobale {
 
     @Override

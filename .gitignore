@@ -4,7 +4,6 @@
 robots2018.pdf
 out/*
 doc/*
-bin/*
 .idea/*
 # Log file
 *.log
@@ -16,7 +15,7 @@ bin/*
 .mtj.tmp/
 
 # Package Files #
-*.jar
+
 *.war
 *.nar
 *.ear
