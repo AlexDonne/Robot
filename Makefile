@@ -64,6 +64,9 @@ exeLigneDroite:
 exeDetour:
 	java -classpath bin:bin/gui.jar Programm cartes/testDetour.map
 
+exeIncendies:
+	java -classpath bin:bin/gui.jar Programm cartes/testIncendies.map
+
 exeObstacles:
 	java -classpath bin:bin/gui.jar Programm cartes/testObstacles.map
 
