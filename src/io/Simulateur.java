@@ -13,6 +13,7 @@ import java.awt.*;
 import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.zip.DataFormatException;
+import java.util.concurrent.TimeUnit;
 
 
 public class Simulateur implements Simulable {
@@ -65,6 +66,18 @@ public class Simulateur implements Simulable {
      * Initialise la simulation, lance la prise des premières decisions et dessine l'interface
      */
     public void start() {
+        sketch();
+        try {
+          Thread.sleep(5000);
+        } catch(InterruptedException e) {
+          Thread.currentThread().interrupt();
+        }
+        // end();
+        // try {
+        //   Thread.sleep(5000);
+        // } catch(InterruptedException e) {
+        //   Thread.currentThread().interrupt();
+        // }
         this.chefPompier.prendreDecisions(this);
         draw();
     }
@@ -77,9 +90,120 @@ public class Simulateur implements Simulable {
         while (!this.listeEvenements.isEmpty() && this.listeEvenements.peek().getDate() <= this.dateSimulation) {
             this.listeEvenements.poll().execute();
         }
-        //this.donneesSimulation.getIncendies().removeIf(incendie -> incendie.estEteint());
     }
 
+
+    /**
+     * Ecran de démarrage
+     */
+
+    private void sketch() {
+      guiSimulator.reset();
+
+      guiSimulator.addGraphicalElement(
+              new ImageElement(
+                      0,
+                      0,
+                      "images/pattes.png",
+                      350,
+                      350,
+                      null
+              )
+      );
+      guiSimulator.addGraphicalElement(
+              new ImageElement(
+                      470,
+                      0,
+                      "images/roues.png",
+                      300,
+                      350,
+                      null
+              )
+      );
+      guiSimulator.addGraphicalElement(
+              new ImageElement(
+                      940,
+                      0,
+                      "images/chenilles.png",
+                      300,
+                      350,
+                      null
+              )
+      );
+      guiSimulator.addGraphicalElement(
+              new ImageElement(
+                      1410,
+                      0,
+                      "images/drone.png",
+                      300,
+                      350,
+                      null
+              )
+      );
+
+      guiSimulator.addGraphicalElement(
+              new ImageElement(
+                      360,
+                      450,
+                      "images/title.png",
+                      1003,
+                      186,
+                      null
+              )
+      );
+
+      guiSimulator.addGraphicalElement(
+              new ImageElement(
+                      0,
+                      650,
+                      "images/flammes.png",
+                      300,
+                      350,
+                      null
+              )
+      );
+
+      guiSimulator.addGraphicalElement(
+              new ImageElement(
+                      650,
+                      750,
+                      this.fichier.replaceAll(".map",".png").replaceAll("cartes/","images/"),
+                      500,
+                      150,
+                      null
+              )
+      );
+
+      guiSimulator.addGraphicalElement(
+              new ImageElement(
+                      1410,
+                      650,
+                      "images/flammes.png",
+                      300,
+                      350,
+                      null
+              )
+      );
+
+    }
+
+    /**
+     * Ecran de fin
+     */
+
+    private void end() {
+      guiSimulator.reset();
+      guiSimulator.addGraphicalElement(
+              new ImageElement(
+                      400,
+                      450,
+                      "images/end.png",
+                      902,
+                      186,
+                      null
+              )
+      );
+    }
 
     /**
      * Dessine l'interface
@@ -183,7 +307,7 @@ public class Simulateur implements Simulable {
     }
 
     /**
-     * Incrément la date de la simulation
+     * Incrémente la date de la simulation
      *
      * @param temps
      */
