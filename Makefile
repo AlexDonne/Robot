@@ -29,13 +29,20 @@ testInvader:
 testLecture:
 	javac -d bin -sourcepath src src/test/TestLecteurDonnees.java
 
-# Execution:
-# on peut taper directement la ligne de commande :
-#   > java -classpath bin:bin/gui.jar TestInvader
-# ou bien lancer l'execution en passant par ce Makefile:
-#   > make exeInvader
+
+	# Execution:
+	# on peut taper directement la ligne de commande :
+	#   > java -classpath bin:bin/gui.jar TestInvader
+	# ou bien lancer l'execution en passant par ce Makefile:
+	#   > make exeInvader
 exeInvader:
 	java -classpath bin:bin/gui.jar TestInvader
+
+compileTests:
+	javac -d bin -classpath bin/junit-4.12.jar:bin/gui.jar:bin/hamcrest-all-1.3.jar:bin/easymock-4.0.1.jar -sourcepath src src/test/AllTests.java
+
+exeUnitTests:
+	java -classpath bin/junit-4.12.jar:bin:bin/hamcrest-all-1.3.jar:bin/gui.jar org.junit.runner.JUnitCore test.AllTests
 
 exeLecture:
 	java -classpath bin TestLecteurDonnees cartes/carteSujet.map
