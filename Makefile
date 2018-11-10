@@ -21,7 +21,6 @@
 #   -classpath : repertoire dans lequel sont cherches les .class deja compiles
 #   -sourcepath : repertoire dans lequel sont cherches les .java (dependances)
 
-all: testInvader testLecture
 
 testInvader:
 	javac -d bin -classpath bin/gui.jar -sourcepath src src/test/TestInvader.java
@@ -64,6 +63,8 @@ exeMushroom:
 
 exeSpiral:
 	java -classpath bin:bin/gui.jar Programm cartes/spiralOfMadness-50x50.map
+
+#tests élémentaires
 
 exeLigneDroite:
 	java -classpath bin:bin/gui.jar Programm cartes/testLigneDroite.map
