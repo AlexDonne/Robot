@@ -9,8 +9,8 @@ public enum NatureTerrain {
     EAU(Color.BLUE),
     FORET(Color.GREEN),
     ROCHE(Color.lightGray),
-    TERRAIN_LIBRE(Color.ORANGE),
-    HABITAT(Color.yellow);
+    TERRAIN_LIBRE(Color.orange),
+    HABITAT(Color.RED);
 
     private Color color;
 

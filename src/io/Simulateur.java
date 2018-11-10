@@ -67,17 +67,6 @@ public class Simulateur implements Simulable {
      */
     public void start() {
         sketch();
-        try {
-          Thread.sleep(5000);
-        } catch(InterruptedException e) {
-          Thread.currentThread().interrupt();
-        }
-        // end();
-        // try {
-        //   Thread.sleep(5000);
-        // } catch(InterruptedException e) {
-        //   Thread.currentThread().interrupt();
-        // }
         this.chefPompier.prendreDecisions(this);
         draw();
     }
@@ -184,7 +173,11 @@ public class Simulateur implements Simulable {
                       null
               )
       );
-
+      try {
+        Thread.sleep(5000);
+      } catch(InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
     }
 
     /**
@@ -203,6 +196,11 @@ public class Simulateur implements Simulable {
                       null
               )
       );
+      try {
+        Thread.sleep(5000);
+      } catch(InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
     }
 
     /**
@@ -210,6 +208,7 @@ public class Simulateur implements Simulable {
      */
     private void draw() {
         guiSimulator.reset();
+        Boolean is_complete = true;
         for (int i = 0; i < this.donneesSimulation.getCarte().getNbLignes(); i++) {
             for (int j = 0; j < this.donneesSimulation.getCarte().getNbColonnes(); j++) {
                 Color color = this.donneesSimulation.getCarte().getCase(i, j).getNatureTerrain().getColor();
@@ -238,6 +237,7 @@ public class Simulateur implements Simulable {
               );
             }
             else {
+            is_complete = false;
             guiSimulator.addGraphicalElement(
                     new ImageElement(
                             incendie.getPosition().getColonne() * 100 + 15,
@@ -252,7 +252,7 @@ public class Simulateur implements Simulable {
                     new Text(
                             incendie.getPosition().getColonne() * 100 + 50,
                             incendie.getPosition().getLigne() * 100 + 10,
-                            Color.RED,
+                            Color.WHITE,
                             Integer.toString(incendie.getEauNecessaire())
                     )
             );
@@ -278,6 +278,9 @@ public class Simulateur implements Simulable {
                             Integer.toString(robot.getReservoir())
                     )
             );
+        }
+        if (is_complete) {
+          end();
         }
 
     }

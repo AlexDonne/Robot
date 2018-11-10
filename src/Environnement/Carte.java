@@ -41,6 +41,7 @@ public class Carte {
     public Case getCase(int ligne, int colonne) {
         return cases[ligne][colonne];
     }
+  
 
     /**
      * Regarde si une case voisine contient de l'eau
