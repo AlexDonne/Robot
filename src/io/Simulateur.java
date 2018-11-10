@@ -185,7 +185,6 @@ public class Simulateur implements Simulable {
      */
 
     private void end() {
-      guiSimulator.reset();
       guiSimulator.addGraphicalElement(
               new ImageElement(
                       400,
@@ -280,6 +279,76 @@ public class Simulateur implements Simulable {
             );
         }
         if (is_complete) {
+          for (int i = 0; i < this.donneesSimulation.getCarte().getNbLignes(); i++) {
+              for (int j = 0; j < this.donneesSimulation.getCarte().getNbColonnes(); j++) {
+                  Color color = this.donneesSimulation.getCarte().getCase(i, j).getNatureTerrain().getColor();
+                  guiSimulator.addGraphicalElement(
+                          new Rectangle(
+                                  j * 100 + 50,
+                                  i * 100 + 50,
+                                  Color.white,
+                                  color,
+                                  100
+                          )
+                  );
+              }
+          }
+          for (Incendie incendie : this.donneesSimulation.getIncendies()) {
+              if (incendie.estEteint()) {
+                guiSimulator.addGraphicalElement(
+                        new ImageElement(
+                                incendie.getPosition().getColonne() * 100 + 15,
+                                incendie.getPosition().getLigne() * 100 + 15,
+                                "images/smoke.png",
+                                80,
+                                80,
+                                null
+                        )
+                );
+              }
+              else {
+              is_complete = false;
+              guiSimulator.addGraphicalElement(
+                      new ImageElement(
+                              incendie.getPosition().getColonne() * 100 + 15,
+                              incendie.getPosition().getLigne() * 100 + 15,
+                              "images/flammes.png",
+                              80,
+                              80,
+                              null
+                      )
+              );
+              guiSimulator.addGraphicalElement(
+                      new Text(
+                              incendie.getPosition().getColonne() * 100 + 50,
+                              incendie.getPosition().getLigne() * 100 + 10,
+                              Color.WHITE,
+                              Integer.toString(incendie.getEauNecessaire())
+                      )
+              );
+            }
+          }
+
+          for (AbstractRobot robot : this.donneesSimulation.getRobots()) {
+              guiSimulator.addGraphicalElement(
+                      new ImageElement(
+                              robot.getPosition().getColonne() * 100 + 20,
+                              robot.getPosition().getLigne() * 100 + 20,
+                              robot.getType().getUrl(),
+                              60,
+                              60,
+                              null
+                      )
+              );
+              guiSimulator.addGraphicalElement(
+                      new Text(
+                              robot.getPosition().getColonne() * 100 + 50,
+                              robot.getPosition().getLigne() * 100 + 90,
+                              Color.BLACK,
+                              Integer.toString(robot.getReservoir())
+                      )
+              );
+          }
           end();
         }
 
