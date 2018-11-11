@@ -20,6 +20,5 @@ public class LecteurDonneesTest {
         Assert.assertEquals(3, donneesSimulation.getRobots().size());
         Assert.assertEquals(NatureTerrain.EAU, donneesSimulation.getCarte().getCase(5, 2).getNatureTerrain());
     }
-
 }
 

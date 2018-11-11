@@ -25,8 +25,14 @@ public abstract class AbstractRobot {
      */
     protected int vitesse;
 
+    /**
+     * Booléen représentant l'état courant du robot, s'il est chargé d'un incendie ou non
+     */
     protected boolean occupe = false;
 
+    /**
+     * La stratégie de déplacement du robot, pour décider du plus court chemin
+     */
     private IStrategieDeplacement strategieDeplacement;
 
     protected AbstractRobot(Case position, IStrategieDeplacement strategieDeplacement) {

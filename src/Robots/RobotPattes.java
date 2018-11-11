@@ -4,6 +4,9 @@ import Environnement.Case;
 import Environnement.NatureTerrain;
 import Robots.StrategieDeplacement.IStrategieDeplacement;
 
+/**
+ * Classe représentant le robot à pattes
+ */
 public class RobotPattes extends AbstractRobot {
 
     public RobotPattes(Case position, IStrategieDeplacement strategieDeplacement) {
@@ -12,13 +15,16 @@ public class RobotPattes extends AbstractRobot {
         this.vitesse = 30000;
     }
 
+    /**
+     * Fonction pas appelée pour ce type de robot, mais qui doit être redéfinie
+     */
     @Override
     public void remplirReservoir() {
-
     }
 
     /**
      * Volume ne diminue pas
+     *
      * @param vol, le volume déversé
      */
     @Override

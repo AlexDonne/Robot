@@ -12,11 +12,11 @@ import java.util.List;
  */
 public class StrategieGlobaleSimple implements IStrategieGlobale {
 
+    /**
+     * Parcourt les incendies et les assigne à des robots libres
+     */
     @Override
     public void prendreDecisions(Simulateur simulateur, List<Incendie> incendies, List<AbstractRobot> robots, Carte carte) {
-        /**
-         * Parcourt les incendies et les assigne à des robots libres
-         */
         for (Incendie incendie : incendies) {
             if (incendie.estPrisEnCharge()) {
                 continue;

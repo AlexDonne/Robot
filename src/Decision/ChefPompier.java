@@ -8,6 +8,9 @@ import io.Simulateur;
  */
 public class ChefPompier {
 
+    /**
+     * Les données de la simulation, le chef connaît la position des incendies, des robots et il connaît la carte
+     */
     private DonneesSimulation donneesSimulation;
 
     /**
@@ -20,6 +23,10 @@ public class ChefPompier {
         this.strategie = strategie;
     }
 
+    /**
+     * Délègue la prise de décision à la stratégie
+     * @param simulateur
+     */
     public void prendreDecisions(Simulateur simulateur) {
         this.strategie.prendreDecisions(simulateur, this.donneesSimulation.getIncendies(), this.donneesSimulation.getRobots(), this.donneesSimulation.getCarte());
     }

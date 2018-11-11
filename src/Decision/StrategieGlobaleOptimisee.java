@@ -32,6 +32,13 @@ public class StrategieGlobaleOptimisee implements IStrategieGlobale {
         }
     }
 
+    /**
+     * Retourne le robot le plus proche de l'incendie
+     * @param carte
+     * @param robots
+     * @param arrivee
+     * @return
+     */
     private AbstractRobot robotPlusProche(Carte carte, List<AbstractRobot> robots, Case arrivee) {
         robots.sort(new TempsDeplacementComparator(arrivee, carte));
         return robots.get(0);

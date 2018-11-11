@@ -11,13 +11,7 @@ Pour lancer un des scénarios `make`+un des scénarios dans le Makefile
 exemple: `make exeMaze`
 
 ## Running the tests
-On a 2 types de tests:
--un test unitaire Junit:
-```
-make compileTests
-make exeUnitTests
-```
--des tests sur des maps/scénarios élémentaires:
+Tests sur des maps/scénarios élémentaires:
 par exemple,
 ```
 make testMain
@@ -32,6 +26,18 @@ Ces tests sont utilisés pour vérifier la bonne démarche de lecture des donné
 make exeDetour
 ```
 -->Le robot doit faire un détour pour ne pas passer sur les roches
+
+###Unit test
+
+Ce test unitaire sert à tester si le lecteurDonnees instancie bien les bons objets.
+On pourrait en ajouter d'autres et tous les alncer via la classe AllTests.
+Pour le lancer : :
+
+```
+
+make compileTests
+make exeUnitTests
+```
 
 ## Deployment
 

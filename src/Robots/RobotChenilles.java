@@ -4,6 +4,9 @@ import Environnement.Case;
 import Environnement.NatureTerrain;
 import Robots.StrategieDeplacement.IStrategieDeplacement;
 
+/**
+ * Classe représentant le robot à chenille
+ */
 public class RobotChenilles extends AbstractRobot {
 
     public RobotChenilles(Case position, IStrategieDeplacement strategieDeplacement) {
@@ -17,6 +20,10 @@ public class RobotChenilles extends AbstractRobot {
         this.reservoir = 2000;
     }
 
+    /**
+     * Contrôle la vitesse qui est attribuée
+     * @param vitesse
+     */
     @Override
     public void setVitesse(int vitesse) {
         if (vitesse > 80000) {

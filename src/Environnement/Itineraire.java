@@ -3,8 +3,14 @@ package Environnement;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Classe qui représente l'itinéraire d'un robot pour aller à une case
+ */
 public class Itineraire {
 
+  /**
+   * Contient une liste d'éléments itinéraires, qui associe une case au temps que le robot mettre pour y aller
+   */
   private List<ElementItineraire> mapItineraire;
 
   public Itineraire(List<ElementItineraire> mapItineraire) {

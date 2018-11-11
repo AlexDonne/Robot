@@ -61,7 +61,7 @@ public enum TypesRobot {
     private String url;
 
     /**
-     * Temps pour se recharger, en minutes
+     * Temps pour se recharger, en secondes
      */
     private int tempsRechargement;
 

@@ -7,7 +7,7 @@ import Robots.AbstractRobot;
 import Exception.CheminNonExistantException;
 
 /**
- * Interface pour les strategies de déplacements possibles pour un robot
+ * Interface pour les stratégies de déplacement possibles pour un robot
  */
 public interface IStrategieDeplacement {
     /**

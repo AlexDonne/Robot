@@ -7,10 +7,17 @@ import Exception.CheminNonExistantException;
 
 import java.util.*;
 
+/**
+ * Classe représentant un graphe, sert pour la stratégie dijkstra.
+ */
 public class Graphe {
     private int nombreSommets; //nombre de sommets
     private double[][] matriceAdjacence;
 
+    /**
+     * Constructeur appelé seulement au sein de la classe
+     * @param n
+     */
     private Graphe(int n) {
         this.nombreSommets = n;
         this.matriceAdjacence = new double[n][n];
@@ -26,7 +33,7 @@ public class Graphe {
     }
 
     /**
-     * Pour un robot donné, transforme la carte en objet graphe
+     * Pour un robot donné, transforme la carte en objet graphe, méthode static qui créé l'objet Graphe
      *
      * @param robot
      * @return

@@ -3,6 +3,9 @@ package Robots;
 import Environnement.Case;
 import Robots.StrategieDeplacement.IStrategieDeplacement;
 
+/**
+ * Classe représentant le robot à roues
+ */
 public class RobotRoues extends AbstractRobot {
 
     public RobotRoues(Case position, IStrategieDeplacement strategieDeplacement) {

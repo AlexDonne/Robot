@@ -16,23 +16,8 @@ import Robots.TypesRobot;
 
 /**
  * Lecteur de cartes au format spectifié dans le sujet.
- * Les données sur les cases, robots puis incendies sont lues dans le fichier,
- * puis simplement affichées.
- * A noter: pas de vérification sémantique sur les valeurs numériques lues.
- * <p>
- * IMPORTANT:
- * <p>
- * Cette classe ne fait que LIRE les infos et les afficher.
- * A vous de modifier ou d'ajouter des méthodes, inspirées de celles présentes
- * (ou non), qui CREENT les objets au moment adéquat pour construire une
- * instance de la classe io.DonneesSimulation à partir d'un fichier.
- * <p>
- * Vous pouvez par exemple ajouter une méthode qui crée et retourne un objet
- * contenant toutes les données lues:
- * public static io.DonneesSimulation creeDonnees(String fichierDonnees);
- * Et faire des méthode creeCase(), creeRobot(), ... qui lisent les données,
- * créent les objets adéquats et les ajoutent ds l'instance de
- * io.DonneesSimulation.
+ * Les données sur les cases, robots puis incendies sont lues dans le fichier, affichées et instanciées.
+ * Sert à créer l'objet DonneesSimulation retourné
  */
 public class LecteurDonnees {
 
@@ -44,7 +29,7 @@ public class LecteurDonnees {
      * Construit les différents objets (robots, incendies, carte ..) et créé un objet DonneesSimulation les contenant, puis le retourne
      *
      * @param fichierDonnees nom du fichier à lire
-     * @return donneesSimulation
+     * @return DonneesSimulation
      */
     public static DonneesSimulation lire(String fichierDonnees, IStrategieDeplacement strategieDeplacement)
             throws FileNotFoundException, DataFormatException {
@@ -74,8 +59,9 @@ public class LecteurDonnees {
     }
 
     /**
-     * Lit et affiche les donnees de la carte.
+     * Lit, affiche les donnees de la carte et retourne l'objet Carte.
      *
+     * @return Carte
      * @throws DataFormatException
      */
     private Carte lireCarte() throws DataFormatException {
@@ -107,7 +93,9 @@ public class LecteurDonnees {
 
 
     /**
-     * Lit et affiche les donnees d'une case.
+     * Lit, affiche les donnees d'une case et retourne l'objet Case
+     *
+     * @return Case
      */
     private NatureTerrain lireCase(int lig, int col) throws DataFormatException {
         ignorerCommentaires();
@@ -134,7 +122,9 @@ public class LecteurDonnees {
 
 
     /**
-     * Lit et affiche les donnees des incendies.
+     * Lit, affiche les donnees des incendies et les retourne dans une liste
+     *
+     * @return List<Incendie>
      */
     private List<Incendie> lireIncendies() throws DataFormatException {
         List<Incendie> incendies = new ArrayList<>();
@@ -155,9 +145,10 @@ public class LecteurDonnees {
 
 
     /**
-     * Lit et affiche les donnees du i-eme incendie.
+     * Lit,affiche les donnees du i-eme incendie et le retourne.
      *
      * @param i
+     * @return Incendie
      */
     private Incendie lireIncendie(int i) throws DataFormatException {
         ignorerCommentaires();
@@ -186,7 +177,9 @@ public class LecteurDonnees {
 
 
     /**
-     * Lit et affiche les donnees des robots.
+     * Lit, affiche les donnees des robots et retourne la liste des robots
+     *
+     * @return List<AbstractRobot>
      */
     private List<AbstractRobot> lireRobots(IStrategieDeplacement strategieDeplacement) throws DataFormatException {
         ignorerCommentaires();
@@ -208,9 +201,10 @@ public class LecteurDonnees {
 
 
     /**
-     * Lit et affiche les donnees du i-eme robot.
+     * Lit, affiche les donnees du i-eme robot et le construit
      *
      * @param i
+     * @return AbstractRobot
      */
     private AbstractRobot lireRobot(int i, IStrategieDeplacement strategieDeplacement) throws DataFormatException {
         ignorerCommentaires();
