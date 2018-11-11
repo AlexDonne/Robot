@@ -46,7 +46,7 @@ exeUnitTests:
 exeLecture:
 	java -classpath bin TestLecteurDonnees cartes/carteSujet.map
 
-testMain:
+compileMain:
 	javac -d bin -classpath bin/gui.jar -sourcepath src src/Programm.java
 
 exeCarteSujet:
@@ -87,3 +87,4 @@ exeAllerRetour:
 
 clean:
 	rm -rf bin/*/*.class
+	rm -rf bin/*.class
