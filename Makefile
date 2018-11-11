@@ -86,5 +86,6 @@ exeAllerRetour:
 	java -classpath bin:bin/gui.jar Programm cartes/testAllerRetour.map
 
 clean:
+	rm -rf bin/*/*/*.class
 	rm -rf bin/*/*.class
 	rm -rf bin/*.class
