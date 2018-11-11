@@ -8,7 +8,7 @@ groupe Sebastien Herbreteau, Alexandre Donne, Victor Bros
 Commencez avec `make clean`
 Ensuite pour compiler le scénario principal `make testMain`
 Pour lancer un des scénarios `make`+un des scénarios dans le Makefile
-exemple: `make exeMaze`
+exemple: `make exeImag`
 
 ## Running the map tests
 
