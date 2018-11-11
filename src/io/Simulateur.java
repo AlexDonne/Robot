@@ -123,7 +123,7 @@ public class Simulateur implements Simulable {
                         470,
                         0,
                         "images/roues.png",
-                        300,
+                        350,
                         350,
                         null
                 )

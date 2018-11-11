@@ -6,7 +6,7 @@ groupe Sebastien Herbreteau, Alexandre Donne, Victor Bros
 ## Getting Started
 
 Commencez avec `make clean`
-Ensuite pour compiler le scénario principal `make testMain`
+Ensuite pour compiler le scénario principal `make compileMain`
 Pour lancer un des scénarios `make`+un des scénarios dans le Makefile
 exemple: `make exeImag`
 
@@ -15,7 +15,7 @@ exemple: `make exeImag`
 Tests sur des maps/scénarios élémentaires:
 par exemple,
 ```
-make testMain
+make compileMain
 make exeLigneDroite
 ```
 
