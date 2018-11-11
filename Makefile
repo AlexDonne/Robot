@@ -55,14 +55,18 @@ exeCarteSujet:
 exeDesert:
 	java -classpath bin:bin/gui.jar Programm cartes/desertOfDeath-20x20.map
 
-exeMaze:
-	java -classpath bin:bin/gui.jar Programm cartes/mazeOfFate-11x11.map
 
 exeMushroom:
 	java -classpath bin:bin/gui.jar Programm cartes/mushroomOfHell-20x20.map
 
 exeSpiral:
 	java -classpath bin:bin/gui.jar Programm cartes/spiralOfMadness-50x50.map
+
+exeMaze:
+	java -classpath bin:bin/gui.jar Programm cartes/mazeOfFate-11x11.map
+
+exeImag:
+	java -classpath bin:bin/gui.jar Programm cartes/imagOfDespair-20x20.map
 
 #tests élémentaires
 
