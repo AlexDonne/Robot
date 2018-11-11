@@ -216,8 +216,8 @@ public class Simulateur implements Simulable {
         );
         guiSimulator.addGraphicalElement(
                 new Text(
-                        100,
-                        100,
+                        830,
+                        750,
                         Color.BLACK,
                         "Temps : " + Long.toString(this.dateSimulation - this.dateDebut)
                 )
