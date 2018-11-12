@@ -75,7 +75,7 @@ public class Simulateur implements Simulable {
         } catch (DataFormatException e) {
             System.out.println("Data not in good format");
         }
-        this.coeff = 10 / (float) this.donneesSimulation.getCarte().getNbLignes();
+        this.coeff = 9 / (float) this.donneesSimulation.getCarte().getNbLignes();
         this.guiSimulator = new GUISimulator(this.donneesSimulation.getCarte().getNbLignes() * 100, this.donneesSimulation.getCarte().getNbColonnes() * 100, Color.BLACK);
         guiSimulator.setSimulable(this);
         this.chefPompier = new ChefPompier(this.donneesSimulation, strategie);
@@ -113,8 +113,8 @@ public class Simulateur implements Simulable {
                         0,
                         0,
                         "images/pattes.png",
-                        350,
-                        350,
+                        300,
+                        300,
                         null
                 )
         );
@@ -123,8 +123,8 @@ public class Simulateur implements Simulable {
                         470,
                         0,
                         "images/roues.png",
-                        350,
-                        350,
+                        300,
+                        300,
                         null
                 )
         );
@@ -133,18 +133,18 @@ public class Simulateur implements Simulable {
                         940,
                         0,
                         "images/chenilles.png",
+                        270,
                         300,
-                        350,
                         null
                 )
         );
         guiSimulator.addGraphicalElement(
                 new ImageElement(
-                        1410,
+                        1400,
                         0,
                         "images/drone.png",
+                        270,
                         300,
-                        350,
                         null
                 )
         );
@@ -152,7 +152,7 @@ public class Simulateur implements Simulable {
         guiSimulator.addGraphicalElement(
                 new ImageElement(
                         360,
-                        450,
+                        400,
                         "images/title.png",
                         1003,
                         186,
@@ -163,18 +163,18 @@ public class Simulateur implements Simulable {
         guiSimulator.addGraphicalElement(
                 new ImageElement(
                         0,
-                        650,
+                        600,
                         "images/flammes.png",
+                        270,
                         300,
-                        350,
                         null
                 )
         );
 
         guiSimulator.addGraphicalElement(
                 new ImageElement(
-                        650,
-                        750,
+                        600,
+                        700,
                         this.fichier.replaceAll(".map", ".png").replaceAll("cartes/", "images/"),
                         500,
                         150,
@@ -184,11 +184,11 @@ public class Simulateur implements Simulable {
 
         guiSimulator.addGraphicalElement(
                 new ImageElement(
-                        1410,
-                        650,
+                        1400,
+                        600,
                         "images/flammes.png",
+                        270,
                         300,
-                        350,
                         null
                 )
         );
