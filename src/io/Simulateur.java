@@ -206,8 +206,8 @@ public class Simulateur implements Simulable {
     private void end() {
         guiSimulator.addGraphicalElement(
                 new ImageElement(
+                        300,
                         400,
-                        450,
                         "images/end.png",
                         902,
                         186,
@@ -216,8 +216,8 @@ public class Simulateur implements Simulable {
         );
         guiSimulator.addGraphicalElement(
                 new Text(
-                        830,
                         750,
+                        700,
                         Color.BLACK,
                         "Temps : " + Long.toString(this.dateSimulation - this.dateDebut)
                 )
